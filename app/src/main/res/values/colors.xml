@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="primary">#1c2e46</color>
+    <color name="primary_dark">#142232</color>
+    <color name="primary_text">#212121</color>
+    <color name="secondary_text">#757575</color>
+    <color name="white">#fff</color>
+    <color name="input_background">#ececec</color>
+    <color name="icon_background">#20ffffff</color>
+    <color name="error">#b00020</color>
+    <color name="recived_messga_backgound">#090d16</color>
+</resources>

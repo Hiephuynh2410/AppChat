@@ -17,27 +17,13 @@
         app:layout_constraintBottom_toTopOf="@id/layoutSend"
         app:layout_constraintTop_toTopOf="parent"/>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/chatRecylerView"
+    <View
+        android:id="@+id/headerbackground"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:clipToPadding="false"
-        android:orientation="vertical"
-        android:overScrollMode="never"
-        android:padding="@dimen/_20sdp"
-        android:visibility="gone"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        app:layout_constraintBottom_toBottomOf="@id/viewbackGround"
-        app:layout_constraintTop_toBottomOf="@id/imagesBack"/>
-
-    <ProgressBar
-        android:id="@+id/progressbar"
-        android:layout_width="@dimen/_25sdp"
-        android:layout_height="@dimen/_25sdp"
-        app:layout_constraintBottom_toBottomOf="@id/viewbackGround"
-        app:layout_constraintEnd_toEndOf="@id/viewbackGround"
-        app:layout_constraintStart_toStartOf="@id/viewbackGround"
-        app:layout_constraintTop_toTopOf="@id/viewbackGround"/>
+        android:background="@color/primary_dark"
+        app:layout_constraintBottom_toTopOf="@id/viewSupporter"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/imagesBack"
@@ -49,7 +35,21 @@
         android:padding="@dimen/_5sdp"
         android:src="@drawable/round_arrow_back_ios_24"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent"
+        app:tint="@color/white"/>
+
+
+
+    <ProgressBar
+        android:id="@+id/progressbar"
+        android:layout_width="@dimen/_25sdp"
+        android:layout_height="@dimen/_25sdp"
+        app:layout_constraintBottom_toBottomOf="@id/viewbackGround"
+        app:layout_constraintEnd_toEndOf="@id/viewbackGround"
+        app:layout_constraintStart_toStartOf="@id/viewbackGround"
+        app:layout_constraintTop_toTopOf="@id/viewbackGround"/>
+
+
 
     <TextView
         android:id="@+id/textName"
@@ -60,13 +60,35 @@
         android:ellipsize="end"
         android:gravity="center"
         android:maxLines="1"
-        android:textColor="@color/primary_text"
+        android:textColor="@color/white"
         android:textSize="@dimen/_14sdp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@id/imagesBack"
         app:layout_constraintEnd_toStartOf="@id/imageInfo"
         app:layout_constraintStart_toEndOf="@id/imagesBack"
         app:layout_constraintTop_toTopOf="@id/imagesBack"/>
+
+    <View
+        android:id="@+id/viewSupporter"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/primary_dark"
+        android:layout_marginTop="@dimen/_12sdp"
+        app:layout_constraintTop_toBottomOf="@id/imagesBack"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/chatRecylerView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:clipToPadding="false"
+        android:orientation="vertical"
+        android:overScrollMode="never"
+        android:padding="@dimen/_20sdp"
+        app:stackFromEnd="true"
+        android:visibility="gone"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintBottom_toBottomOf="@id/viewbackGround"
+        app:layout_constraintTop_toBottomOf="@id/viewSupporter"/>
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/imageInfo"
@@ -78,7 +100,8 @@
         android:padding="@dimen/_4sdp"
         android:src="@drawable/outline_info_24"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent"
+        app:tint="@color/white"/>
 
     <FrameLayout
         android:id="@+id/layoutSend"

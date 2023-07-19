@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Base64;
 import android.view.View;
 
@@ -44,6 +46,21 @@ public class chatActivity extends AppCompatActivity {
         loadReceiver();
         init();
         listenMess();
+        updateSendButtonState();
+        binding.inutMess.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                updateSendButtonState();
+            }
+        });
     }
 
     private void sendMess() {
@@ -134,5 +151,13 @@ public class chatActivity extends AppCompatActivity {
 
     private String getReadableDateTime(Date date) {
         return new SimpleDateFormat("MMMM dd, yyyy - hh:mm a", Locale.getDefault()).format(date);
+    }
+
+    private void updateSendButtonState() {
+        String message = binding.inutMess.getText().toString().trim();
+        boolean isMessageEmpty = message.isEmpty();
+
+        binding.layoutSend.setEnabled(!isMessageEmpty);
+        binding.layoutSend.setAlpha(isMessageEmpty ? 0.5f : 1.0f);
     }
 }

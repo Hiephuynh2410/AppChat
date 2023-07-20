@@ -2,6 +2,7 @@ package com.example.chatapp.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -109,7 +110,10 @@ public class chatActivity extends AppCompatActivity {
         binding.imagesBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                onBackPressed();
+//                onBackPressed();
+                Intent intent = new Intent(chatActivity.this, UserActivity.class);
+                startActivity(intent);
+                finish();
             }
         });
         binding.layoutSend.setOnClickListener(new View.OnClickListener() {

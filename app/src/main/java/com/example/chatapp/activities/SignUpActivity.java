@@ -5,34 +5,43 @@ import androidx.activity.result.contract.ActivityResultContract;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.provider.SyncStateContract;
+import android.text.TextUtils;
 import android.util.Base64;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.chatapp.R;
 import com.example.chatapp.databinding.ActivitySignUpBinding;
 import com.example.chatapp.utilities.PreferenceManager;
 import com.example.chatapp.utilities.constant;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.HashMap;
-
 public class SignUpActivity extends AppCompatActivity {
 
     private ActivitySignUpBinding binding;
     private PreferenceManager preferenceManager;
     private String encodeImage;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,8 +49,11 @@ public class SignUpActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
         preferenceManager = new PreferenceManager(getApplicationContext());
         setListeners();
+
     }
 
+
+/////////////////
     private void setListeners() {
         binding.textSignIn.setOnClickListener(v -> onBackPressed());
         binding.buttonSignUp.setOnClickListener( v -> {
@@ -117,30 +129,53 @@ public class SignUpActivity extends AppCompatActivity {
     );
 
     private Boolean isvalidSignUp() {
-        if(encodeImage == null ) {
-            showToast("select profile Images");
+        String name = binding.inputName.getText().toString().trim();
+        String email = binding.inputemail.getText().toString().trim();
+        String password = binding.inputPassword.getText().toString().trim();
+        String confirmPassword = binding.inputConfirmPassword.getText().toString().trim();
+
+        if (encodeImage == null) {
+            showToast("Select profile image");
             return false;
-        } else if (binding.inputName.getText().toString().trim().isEmpty()) {
-            showToast("enter name");
-            return false;
-        } else if (binding.inputemail.getText().toString().trim().isEmpty()) {
-            showToast("enter email");
-            return false;
-        } else if(!Patterns.EMAIL_ADDRESS.matcher(binding.inputemail.getText().toString()).matches()) {
-            showToast("enter valid image");
-            return false;
-        } else if(binding.inputPassword.getText().toString().trim().isEmpty()) {
-            showToast("enter password");
-            return false;
-        } else if(binding.inputConfirmPassword.getText().toString().trim().isEmpty()) {
-            showToast("confirm your password");
-            return false;
-        } else if(!binding.inputPassword.getText().toString().equals(binding.inputConfirmPassword.getText().toString())) {
-            showToast("password & confirm password must be same");
-            return false;
-        } else {
-            return  true;
         }
+
+        if (TextUtils.isEmpty(name) && TextUtils.isEmpty(email) && TextUtils.isEmpty(password) && TextUtils.isEmpty(confirmPassword)) {
+            binding.inputName.setError("Enter name");
+            binding.inputemail.setError("Enter email");
+            binding.inputPassword.setError("Enter password");
+            binding.inputConfirmPassword.setError("Confirm your password");
+            return false;
+        }
+        if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            binding.inputemail.setError("Enter valid email");
+            return false;
+        }
+        if (!password.equals(confirmPassword)) {
+            binding.inputConfirmPassword.setError("Password & confirm password must be the same");
+            return false;
+        }
+
+        // Clear error indicators if there were any
+        binding.inputName.setError(null);
+        binding.inputemail.setError(null);
+        binding.inputPassword.setError(null);
+        binding.inputConfirmPassword.setError(null);
+
+        // kiểm tra gmail đã tồn tại
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection(constant.KEY_COLLECTION_USERS)
+                .whereEqualTo(constant.KEY_EMAIL, email)
+                .get()
+                .addOnSuccessListener(queryDocumentSnapshots -> {
+                    if (!queryDocumentSnapshots.isEmpty()) {
+                        binding.inputemail.setError("Email is already registered");
+                    } else {
+                        signUp();
+                    }
+                })
+                .addOnFailureListener(e -> showToast("Error checking email existence"));
+
+        return false;
     }
 
     private void loading(Boolean isLoading) {
@@ -153,3 +188,4 @@ public class SignUpActivity extends AppCompatActivity {
         }
     }
 }
+

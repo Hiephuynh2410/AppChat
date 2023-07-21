@@ -11,6 +11,7 @@ import android.text.TextWatcher;
 import android.util.Base64;
 import android.view.View;
 
+import com.example.chatapp.R;
 import com.example.chatapp.adapter.ChatAdapter;
 import com.example.chatapp.databinding.ActivityChatBinding;
 import com.example.chatapp.models.ChatMess;
@@ -109,12 +110,13 @@ public class chatActivity extends BaseActivity {
            }
            if(isReceiverAvailable) {
                binding.textavailabilty.setVisibility(View.VISIBLE);
+               binding.textavailabiltyoff.setVisibility(View.GONE);
            } else {
+               binding.textavailabiltyoff.setVisibility(View.VISIBLE);
                binding.textavailabilty.setVisibility(View.GONE);
            }
         });
     }
-
 
     private void listenMess() {
         db.collection(constant.KEY_COLLECTION_CHAT)

@@ -32,8 +32,9 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 
-public class chatActivity extends AppCompatActivity {
+public class chatActivity extends BaseActivity {
 
     private ActivityChatBinding binding;
     private User receiverUser;
@@ -42,6 +43,7 @@ public class chatActivity extends AppCompatActivity {
     private PreferenceManager preferenceManager;
     private FirebaseFirestore db;
     private String conversionId = null;
+    private Boolean isReceiverAvailable = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -93,6 +95,26 @@ public class chatActivity extends AppCompatActivity {
         }
         binding.inutMess.setText(null);
     }
+
+    private void listenAvailabilityOfReceiver() {
+        db.collection(constant.KEY_COLLECTION_USERS).document(receiverUser.id).addSnapshotListener(chatActivity.this, (value, error) -> {
+           if(error != null) {
+               return;
+           }
+           if(value != null) {
+               if(value.getLong(constant.KEY_AVAILABILITY) != null) {
+                   int availability = Objects.requireNonNull(value.getLong(constant.KEY_AVAILABILITY).intValue());
+                   isReceiverAvailable = availability == 1;
+               }
+           }
+           if(isReceiverAvailable) {
+               binding.textavailabilty.setVisibility(View.VISIBLE);
+           } else {
+               binding.textavailabilty.setVisibility(View.GONE);
+           }
+        });
+    }
+
 
     private void listenMess() {
         db.collection(constant.KEY_COLLECTION_CHAT)
@@ -216,5 +238,11 @@ public class chatActivity extends AppCompatActivity {
 
         binding.layoutSend.setEnabled(!isMessageEmpty);
         binding.layoutSend.setAlpha(isMessageEmpty ? 0.5f   : 1.0f);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        listenAvailabilityOfReceiver();
     }
 }

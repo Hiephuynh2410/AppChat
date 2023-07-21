@@ -1,21 +1,14 @@
 package com.example.chatapp.activities;
 
-import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.util.Base64;
 import android.view.View;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.resource.bitmap.CircleCrop;
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.resource.bitmap.CircleCrop;
-import com.bumptech.glide.request.RequestOptions;
 
 import com.example.chatapp.adapter.RecentConversationAdapter;
 import com.example.chatapp.databinding.ActivityMainBinding;
@@ -24,10 +17,8 @@ import com.example.chatapp.models.ChatMess;
 import com.example.chatapp.models.User;
 import com.example.chatapp.utilities.PreferenceManager;
 import com.example.chatapp.utilities.constant;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -40,7 +31,7 @@ import java.util.HashMap;
 import java.util.List;
 
 
-public class MainActivity extends AppCompatActivity  implements ConversionListener {
+public class MainActivity extends BaseActivity  implements ConversionListener {
 
     private ActivityMainBinding binding;
 

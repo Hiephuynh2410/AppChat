@@ -9,4 +9,5 @@
     <color name="icon_background">#20ffffff</color>
     <color name="error">#b00020</color>
     <color name="recived_messga_backgound">#090d16</color>
+    <color name="green">#008000</color>
 </resources>

@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Base64;
@@ -97,24 +98,41 @@ public class chatActivity extends BaseActivity {
         binding.inutMess.setText(null);
     }
 
+    private Handler handler = new Handler();
+    private Runnable hideRunnable = new Runnable() {
+        @Override
+        public void run() {
+            // Ẩn TextView sau 3 giây
+            binding.textavailabilty.setVisibility(View.GONE);
+            binding.textavailabiltyoff.setVisibility(View.GONE);
+        }
+    };
+
     private void listenAvailabilityOfReceiver() {
         db.collection(constant.KEY_COLLECTION_USERS).document(receiverUser.id).addSnapshotListener(chatActivity.this, (value, error) -> {
-           if(error != null) {
-               return;
-           }
-           if(value != null) {
-               if(value.getLong(constant.KEY_AVAILABILITY) != null) {
-                   int availability = Objects.requireNonNull(value.getLong(constant.KEY_AVAILABILITY).intValue());
-                   isReceiverAvailable = availability == 1;
-               }
-           }
-           if(isReceiverAvailable) {
-               binding.textavailabilty.setVisibility(View.VISIBLE);
-               binding.textavailabiltyoff.setVisibility(View.GONE);
-           } else {
-               binding.textavailabiltyoff.setVisibility(View.VISIBLE);
-               binding.textavailabilty.setVisibility(View.GONE);
-           }
+            if(error != null) {
+                return;
+            }
+            if(value != null) {
+                if(value.getLong(constant.KEY_AVAILABILITY) != null) {
+                    int availability = Objects.requireNonNull(value.getLong(constant.KEY_AVAILABILITY).intValue());
+                    isReceiverAvailable = availability == 1;
+                }
+            }
+            if(isReceiverAvailable) {
+                binding.textavailabilty.setVisibility(View.VISIBLE);
+                binding.textavailabiltyoff.setVisibility(View.GONE);
+
+                // Lên lịch ẩn TextView sau 3 giây
+                handler.postDelayed(hideRunnable, 2000);
+            } else {
+                binding.textavailabiltyoff.setVisibility(View.VISIBLE);
+                binding.textavailabilty.setVisibility(View.GONE);
+
+                // Lên lịch ẩn TextView sau 3 giây
+                handler.postDelayed(hideRunnable, 2000);
+
+            }
         });
     }
 

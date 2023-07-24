@@ -36,6 +36,9 @@ import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.HashMap;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class SignUpActivity extends AppCompatActivity {
 
     private ActivitySignUpBinding binding;
@@ -138,7 +141,10 @@ public class SignUpActivity extends AppCompatActivity {
             showToast("Select profile image");
             return false;
         }
-
+        if (!isValidPassword(password)) {
+            binding.inputPassword.setError("Password must be at least 8 characters long, contain one uppercase letter, one lowercase letter, and one digit.");
+            return false;
+        }
         if (TextUtils.isEmpty(name) && TextUtils.isEmpty(email) && TextUtils.isEmpty(password) && TextUtils.isEmpty(confirmPassword)) {
             binding.inputName.setError("Enter name");
             binding.inputemail.setError("Enter email");
@@ -186,6 +192,15 @@ public class SignUpActivity extends AppCompatActivity {
             binding.progressbar.setVisibility(View.INVISIBLE);
             binding.buttonSignUp.setVisibility(View.VISIBLE);
         }
+    }
+
+    private boolean isValidPassword(String password) {
+        // The regex pattern for a valid password (minimum 8 characters, at least one uppercase, one lowercase, and one digit)
+        String regexPattern = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d]{8,}$";
+
+        Pattern pattern = Pattern.compile(regexPattern);
+        Matcher matcher = pattern.matcher(password);
+        return matcher.matches();
     }
 }
 

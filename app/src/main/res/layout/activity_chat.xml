@@ -76,30 +76,7 @@
         android:layout_marginTop="@dimen/_12sdp"
         app:layout_constraintTop_toBottomOf="@id/imagesBack"/>
 
-    <TextView
-        android:id="@+id/textavailabilty"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/viewSupporter"
-        android:background="@color/green"
-        android:textSize="@dimen/_10ssp"
-        android:textColor="@color/white"
-        android:text="@string/online"
-        android:visibility="gone"
-        android:gravity="center"
-        android:padding="@dimen/_5sdp"/>
-    <TextView
-        android:id="@+id/textavailabiltyoff"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/viewSupporter"
-        android:background="@color/error"
-        android:textSize="@dimen/_10ssp"
-        android:textColor="@color/white"
-        android:text="offline"
-        android:visibility="gone"
-        android:gravity="center"
-        android:padding="@dimen/_5sdp"/>
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/chatRecylerView"
@@ -169,5 +146,28 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/layoutSend"
         app:layout_constraintStart_toStartOf="parent"/>
-
+    <TextView
+        android:id="@+id/textavailabilty"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/viewSupporter"
+        android:background="@color/green"
+        android:textSize="@dimen/_10ssp"
+        android:textColor="@color/white"
+        android:text="@string/online"
+        android:visibility="gone"
+        android:gravity="center"
+        android:padding="@dimen/_5sdp"/>
+    <TextView
+        android:id="@+id/textavailabiltyoff"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/viewSupporter"
+        android:background="@color/error"
+        android:textSize="@dimen/_10ssp"
+        android:textColor="@color/white"
+        android:text="offline"
+        android:visibility="gone"
+        android:gravity="center"
+        android:padding="@dimen/_5sdp"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -30,6 +30,10 @@
             android:textColor="@color/secondary_text"
             android:textSize="@dimen/_12ssp"
             android:textStyle="bold"/>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_40sdp"/>
         <EditText
             android:id="@+id/inputemail"
             android:layout_width="match_parent"

@@ -1,5 +1,6 @@
 package com.example.chatapp.activities;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -11,12 +12,15 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Base64;
 import android.view.View;
+import android.widget.Toast;
 
 import com.example.chatapp.R;
 import com.example.chatapp.adapter.ChatAdapter;
 import com.example.chatapp.databinding.ActivityChatBinding;
 import com.example.chatapp.models.ChatMess;
 import com.example.chatapp.models.User;
+import com.example.chatapp.network.ApiClient;
+import com.example.chatapp.network.ApiService;
 import com.example.chatapp.utilities.PreferenceManager;
 import com.example.chatapp.utilities.constant;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -27,6 +31,10 @@ import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -35,6 +43,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class chatActivity extends BaseActivity {
 
@@ -95,7 +107,71 @@ public class chatActivity extends BaseActivity {
             conversion.put(constant.KEY_TIMESTAMP,new Date());
             addConversion(conversion);
         }
+        if(!isReceiverAvailable) {
+            try {
+                JSONArray tokens = new JSONArray();
+                tokens.put(receiverUser.token);
+
+                JSONObject data = new JSONObject();
+                data.put(constant.KEY_USER_ID, preferenceManager.getString(constant.KEY_USER_ID));
+                data.put(constant.KEY_NAME, preferenceManager.getString(constant.KEY_NAME));
+                data.put(constant.KEY_FCM_TOKEN, preferenceManager.getString(constant.KEY_FCM_TOKEN));
+                data.put(constant.KEY_MESSAGE, binding.inutMess.getText().toString());
+
+                JSONObject body = new JSONObject();
+                body.put(constant.REMOTE_MSG_DATA , data);
+                body.put(constant.REMOTE_MSG_REGISTRATION_IDS, tokens);
+
+                sendNotifi(body.toString());
+            } catch (Exception e) {
+                showToast(e.getMessage());
+            }
+        }
         binding.inutMess.setText(null);
+    }
+
+    private void showToast(String mess) {
+        Toast.makeText(getApplicationContext(), mess, Toast.LENGTH_SHORT).show();
+    }
+
+    private void sendNotifi(String messBody) {
+        //Đoạn mã này tạo một đối tượng ApiClient thông qua hàm getClient() và tạo một đối tượng ApiService thông qua
+        ApiClient.getClient().create(ApiService.class).sendMess(
+                constant.getRemoteMsgHeader(),
+                messBody
+        ).enqueue(new Callback<String>() {
+            //enqueue Đây là một phần của thư viện Retrofit, nó được sử dụng để gửi yêu cầu bất đồng bộ và xử lý kết quả trả về. Khi yêu cầu thành công
+            // , phương thức onResponse được gọi, và khi yêu cầu thất bại, phương thức onFailure được gọi.
+            @Override
+            public void onResponse(@NonNull Call<String> call, @NonNull Response<String> response) {
+                if(response.isSuccessful()) {
+                    try {
+                        //kiểm tra xem phản hồi có dữ liệu không. Nếu không có dữ liệu, ta sẽ không tiếp tục xử lý và thoát khỏi phương thức.
+                        if(response.body() != null) {
+                            //tạo một đối tượng JSONObject từ dữ liệu phản hồi (response.body()). Điều này cho phép truy xuất và xử lý dữ liệu trong dạng JSON.
+                            JSONObject responseJson = new JSONObject(response.body());
+                            //Chúng ta tiếp tục bẻ khóa JSON để truy cập vào mảng JSON có tên "result" trong dữ liệu phản hồi. Mảng này có thể chứa kết quả thông báo gửi từ máy chủ FCM.
+                            JSONArray results = responseJson.getJSONArray("result");
+                            if(responseJson.getInt("failure") == 1) { //truy xuất vào giá trị số nguyên có tên "failure" trong JSON. Trong cơ chế của FCM, nếu việc gửi thông báo có lỗi thì giá trị này sẽ là 1.
+                                JSONObject err = (JSONObject) results.get(0);//Nếu giá trị "failure" bằng 1, chúng ta lấy phần tử đầu tiên trong mảng "results", giả sử là một đối tượng JSON chứa thông tin lỗi.
+                                showToast(err.getString("Error"));
+                                return;
+                            }
+                        }
+                    }catch (JSONException e) {
+                            e.printStackTrace();
+                    }
+//                    showToast("Notifycation sent Success");
+                } else {
+                    showToast("error" + response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<String> call, @NonNull Throwable t) {
+                showToast(t.getMessage());
+            }
+        });
     }
 
     private Handler handler = new Handler();
@@ -118,6 +194,12 @@ public class chatActivity extends BaseActivity {
                     int availability = Objects.requireNonNull(value.getLong(constant.KEY_AVAILABILITY).intValue());
                     isReceiverAvailable = availability == 1;
                 }
+                receiverUser.token = value.getString(constant.KEY_FCM_TOKEN);
+                if(receiverUser.image == null) {
+                    receiverUser.image = value.getString(constant.KEY_IMAGE);
+                    chatAdapter.setReceiverProfileImg(getBitmapFromEncodeString(receiverUser.image));
+                    chatAdapter.notifyItemRangeChanged(0, chatMesses.size());
+                }
             }
             if(isReceiverAvailable) {
                 binding.textavailabilty.setVisibility(View.VISIBLE);
@@ -131,7 +213,6 @@ public class chatActivity extends BaseActivity {
 
                 // Lên lịch ẩn TextView sau 3 giây
                 handler.postDelayed(hideRunnable, 2000);
-
             }
         });
     }
@@ -155,8 +236,12 @@ public class chatActivity extends BaseActivity {
         db = FirebaseFirestore.getInstance();
     }
     private Bitmap getBitmapFromEncodeString(String encodeimg) {
-        byte[] bytes = Base64.decode(encodeimg, Base64.DEFAULT);
-        return BitmapFactory.decodeByteArray(bytes, 0 , bytes.length);
+        if(encodeimg != null ) {
+            byte[] bytes = Base64.decode(encodeimg, Base64.DEFAULT);
+            return BitmapFactory.decodeByteArray(bytes, 0 , bytes.length);
+        } else  {
+            return null;
+        }
     }
 
     private void loadReceiver() {

@@ -130,12 +130,24 @@ public class SignUpActivity extends AppCompatActivity {
             }
         }
     );
+    private boolean isValidPassword(String password) {
+        // The regex pattern for a valid password (minimum 8 characters, at least one uppercase, one lowercase, and one digit)
+        String regexPattern = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d]{8,}$";
+        Pattern pattern = Pattern.compile(regexPattern);
+        Matcher matcher = pattern.matcher(password);
+        return matcher.matches();
+    }
 
     private Boolean isvalidSignUp() {
         String name = binding.inputName.getText().toString().trim();
         String email = binding.inputemail.getText().toString().trim();
         String password = binding.inputPassword.getText().toString().trim();
         String confirmPassword = binding.inputConfirmPassword.getText().toString().trim();
+
+        if (name.contains(" ")) {
+            binding.inputName.setError("Name cannot contain spaces");
+            return false;
+        }
 
         if (encodeImage == null) {
             showToast("Select profile image");
@@ -194,13 +206,6 @@ public class SignUpActivity extends AppCompatActivity {
         }
     }
 
-    private boolean isValidPassword(String password) {
-        // The regex pattern for a valid password (minimum 8 characters, at least one uppercase, one lowercase, and one digit)
-        String regexPattern = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d]{8,}$";
 
-        Pattern pattern = Pattern.compile(regexPattern);
-        Matcher matcher = pattern.matcher(password);
-        return matcher.matches();
-    }
 }
 

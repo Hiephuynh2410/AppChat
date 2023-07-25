@@ -37,11 +37,13 @@
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="577dp"
         android:layout_marginTop="@dimen/_16sdp"
         android:background="@drawable/bg_content_bottom"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/imagesBack">
+        app:layout_constraintTop_toBottomOf="@id/imagesBack"
+        app:layout_constraintVertical_bias="1.0"
+        tools:layout_editor_absoluteX="2dp">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/userRecyclerView"
@@ -52,13 +54,14 @@
             android:overScrollMode="never"
             android:padding="@dimen/_20sdp"
             android:visibility="gone"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
         <ProgressBar
             android:id="@+id/progressbar"
             android:layout_width="@dimen/_25sdp"
             android:layout_height="@dimen/_25sdp"
-            android:layout_gravity="center"/>
+            android:layout_gravity="center" />
+
         <TextView
             android:id="@+id/textErrorMess"
             android:layout_width="match_parent"
@@ -69,20 +72,28 @@
             android:gravity="center"
             android:textColor="@color/error"
             android:textSize="@dimen/_12ssp"
-            android:visibility="gone"
-            />
+            android:visibility="gone" />
 
 
     </FrameLayout>
 
-    <SearchView
-        android:id="@+id/searchView"
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/_16sdp"
-        android:queryHint="@string/search_hint"
-        android:iconifiedByDefault="false"
+        app:cardCornerRadius="@dimen/_8sdp"
+        app:cardElevation="@dimen/_4sdp"
         app:layout_constraintTop_toBottomOf="@id/imagesBack"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <SearchView
+            android:id="@+id/searchView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:queryHint="@string/search_hint"
+            android:iconifiedByDefault="false"
+            app:queryBackground="@null" />
+
+    </androidx.cardview.widget.CardView>
 </androidx.constraintlayout.widget.ConstraintLayout>

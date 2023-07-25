@@ -158,7 +158,7 @@ public class chatActivity extends BaseActivity {
                                 return;
                             }
                         }
-                    }catch (JSONException e) {
+                    } catch (JSONException e) {
                             e.printStackTrace();
                     }
 //                    showToast("Notifycation sent Success");
@@ -255,7 +255,7 @@ public class chatActivity extends BaseActivity {
             @Override
             public void onClick(View view) {
 //                onBackPressed();
-                Intent intent = new Intent(chatActivity.this, UserActivity.class);
+                Intent intent = new Intent(chatActivity.this, MainActivity.class);
                 startActivity(intent);
                 finish();
             }

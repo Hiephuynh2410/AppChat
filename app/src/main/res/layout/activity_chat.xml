@@ -38,8 +38,6 @@
         app:layout_constraintTop_toTopOf="parent"
         app:tint="@color/white"/>
 
-
-
     <ProgressBar
         android:id="@+id/progressbar"
         android:layout_width="@dimen/_25sdp"

@@ -156,7 +156,6 @@ public class MainActivity extends BaseActivity  implements ConversionListener {
             .addOnFailureListener(e -> showToast("unable to sign out"));
     }
 
-
     @Override
     public void onConversionClicked(User user) {
         Intent intent = new Intent(getApplicationContext(), chatActivity.class);

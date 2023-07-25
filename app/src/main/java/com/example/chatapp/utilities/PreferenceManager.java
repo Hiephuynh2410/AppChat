@@ -20,7 +20,6 @@ public class PreferenceManager {
         editor.apply();
     }
 
-
     //Phương thức này được sử dụng để truy xuất một giá trị kiểu Boolean từ SharedPreferences. Nó nhận một tham số key là tên khóa (key) cần truy xuất.
     // Phương thức này trả về giá trị Boolean tương ứng với khóa (key) được cung cấp. Nếu không tìm thấy giá trị, giá trị mặc định là false sẽ được trả về.
     public Boolean getBoolean(String key) {

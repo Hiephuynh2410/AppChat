@@ -19,8 +19,6 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private final  String senderId;
     public static final int VIEW_TYPE_SENT = 1;
     public static final int VIEW_TYPE_RECEIVED = 2;
-
-
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -67,14 +65,12 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     }
 
     static class SentMessViewHolder extends RecyclerView.ViewHolder {
-
         private final ItemContainerSentMessBinding binding;
 
         SentMessViewHolder(ItemContainerSentMessBinding itemContainerSentMessBinding){
             super(itemContainerSentMessBinding.getRoot());
             binding = itemContainerSentMessBinding;
         }
-
         void setData(ChatMess chatMess) {
             binding.textMess.setText(chatMess.message);
             binding.textDateTime.setText(chatMess.dateTime);
@@ -82,14 +78,11 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     }
 
     static class ReceivedMessViewHolder extends RecyclerView.ViewHolder {
-
         private  final ItemContainerReceivedMessBinding binding;
-
         ReceivedMessViewHolder(ItemContainerReceivedMessBinding itemContainerReceivedMessBinding) {
             super(itemContainerReceivedMessBinding.getRoot());
             binding = itemContainerReceivedMessBinding;
         }
-
         void setData(ChatMess chatMess, Bitmap receiverProfileImg) {
             binding.textMess.setText(chatMess.message);
             binding.txtDateTime.setText(chatMess.dateTime);

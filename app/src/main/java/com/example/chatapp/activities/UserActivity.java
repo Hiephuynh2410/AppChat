@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.SearchView;
 
 import com.example.chatapp.R;
 import com.example.chatapp.adapter.UserAdapter;
@@ -33,6 +34,20 @@ public class UserActivity extends BaseActivity implements UserListener {
         preferenceManager = new PreferenceManager(getApplicationContext());
         setListeners();
         getUser();
+        binding.searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                // Không cần thực hiện gì ở đây khi người dùng nhấn Enter
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                // Khi người dùng thay đổi nội dung trong thanh tìm kiếm, gọi getUser() để cập nhật danh sách người dùng
+                getUser();
+                return true;
+            }
+        });
     }
 
     private void setListeners() {
@@ -45,33 +60,36 @@ public class UserActivity extends BaseActivity implements UserListener {
         database.collection(constant.KEY_COLLECTION_USERS)
                 .get()
                 .addOnCompleteListener(task -> {
-                   loading(false);
-                   String currentUserId = preferenceManager.getString(constant.KEY_USER_ID);
-                       if(task.isSuccessful() && task.getResult() != null) {
-                           List<User> users = new ArrayList<>();
-                           for (QueryDocumentSnapshot queryDocumentSnapshot : task.getResult()) {
-                               if(currentUserId.equals(queryDocumentSnapshot.getId())) {
-                                   continue;
-                               }
-                               User user = new User();
-                               user.name = queryDocumentSnapshot.getString(constant.KEY_NAME);
-                               user.email = queryDocumentSnapshot.getString(constant.KEY_EMAIL);
-                               user.image = queryDocumentSnapshot.getString(constant.KEY_IMAGE);
-                               user.token = queryDocumentSnapshot.getString(constant.KEY_FCM_TOKEN);
-                               user.id = queryDocumentSnapshot.getId();
-                               users.add(user);
-                           }
-                           if(users.size() > 0) {
-                               UserAdapter userAdapter = new UserAdapter(users, this) ;
-                               binding.userRecyclerView.setAdapter(userAdapter);
-                               binding.userRecyclerView.setVisibility(View.VISIBLE);
-                           } else {
-                               showErr();
-                           }
-                       } else {
-                         showErr();
-                       }
-                   });
+                    loading(false);
+
+                    // Xử lý danh sách người dùng để lọc theo tìm kiếm
+                    List<User> filteredUsers = new ArrayList<>();
+                    for (QueryDocumentSnapshot queryDocumentSnapshot : task.getResult()) {
+
+                        // Lấy thông tin người dùng từ Firestore
+                        User user = new User();
+                        user.name = queryDocumentSnapshot.getString(constant.KEY_NAME);
+                        user.email = queryDocumentSnapshot.getString(constant.KEY_EMAIL);
+                        user.image = queryDocumentSnapshot.getString(constant.KEY_IMAGE);
+                        user.token = queryDocumentSnapshot.getString(constant.KEY_FCM_TOKEN);
+                        user.id = queryDocumentSnapshot.getId();
+
+                        // Kiểm tra nếu tên người dùng chứa chuỗi tìm kiếm
+                        String searchQuery = binding.searchView.getQuery().toString().toLowerCase();
+                        if (user.name.toLowerCase().contains(searchQuery)) {
+                            filteredUsers.add(user);
+                        }
+                    }
+
+                    // Hiển thị danh sách người dùng đã lọc trong RecyclerView
+                    if (filteredUsers.size() > 0) {
+                        UserAdapter userAdapter = new UserAdapter(filteredUsers, this);
+                        binding.userRecyclerView.setAdapter(userAdapter);
+                        binding.userRecyclerView.setVisibility(View.VISIBLE);
+                    } else {
+                        showErr();
+                    }
+                });
     }
 
     private void showErr() {

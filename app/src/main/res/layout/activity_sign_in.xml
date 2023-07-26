@@ -62,6 +62,7 @@
             android:inputType="textPassword"
             android:textColor="@color/primary_text"
             android:textSize="@dimen/_13ssp"/>
+
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -89,6 +90,16 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_30sdp"
             android:text="@string/create_new_account"
+            android:textColor="@color/primary"
+            android:textSize="@dimen/_13ssp"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:id="@+id/textOTP"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_30sdp"
+            android:text="Sent Otp"
             android:textColor="@color/primary"
             android:textSize="@dimen/_13ssp"
             android:textStyle="bold"/>

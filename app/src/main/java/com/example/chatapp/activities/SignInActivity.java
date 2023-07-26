@@ -1,9 +1,11 @@
 package com.example.chatapp.activities;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -11,7 +13,9 @@ import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.chatapp.R;
@@ -43,8 +47,8 @@ public class SignInActivity extends AppCompatActivity {
     private PreferenceManager preferenceManager;
 
     Dialog dialog;
-
-
+    TextView btnotp;
+    private AlertDialog phoneNumberDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,7 +62,14 @@ public class SignInActivity extends AppCompatActivity {
         binding = ActivitySignInBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         setListeners();
-
+        btnotp = findViewById(R.id.textOTP);
+        btnotp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), OTP.class);
+                startActivity(intent);
+            }
+        });
     }
 
     //////////////////////////////////
@@ -67,10 +78,58 @@ public class SignInActivity extends AppCompatActivity {
         binding.buttonSignIn.setOnClickListener(v -> {
             if(isValidSignIn()) {
                 SignIn();
+//                checkCredentials();
             }
         });
 
     }
+    private void checkCredentials() {
+        loading(true);
+        FirebaseFirestore database = FirebaseFirestore.getInstance();
+        database.collection(constant.KEY_COLLECTION_USERS)
+                .whereEqualTo(constant.KEY_EMAIL, binding.inputemail.getText().toString())
+                .whereEqualTo(constant.KEY_PASSWORD, binding.inputPassword.getText().toString())
+                .get().addOnCompleteListener(task -> {
+                    if (task.isSuccessful() && task.getResult() != null && task.getResult().getDocuments().size() > 0) {
+                        // Email and password are correct, show dialog to enter phone number
+                        loading(false);
+                        showPhoneNumberDialog();
+                    } else {
+                        // Invalid credentials
+                        loading(false);
+                        showToast("Unable to Sign In");
+                    }
+                });
+    }
+
+    private void showPhoneNumberDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Enter Phone Number");
+        View view = getLayoutInflater().inflate(R.layout.activity_otp, null);
+        EditText editTextPhoneNumber = view.findViewById(R.id.t1);
+        builder.setView(view);
+        builder.setPositiveButton("Get OTP", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                String phoneNumber = editTextPhoneNumber.getText().toString().trim();
+                if (!TextUtils.isEmpty(phoneNumber)) {
+                    // Start OTP activity and pass the phone number
+                    Intent intent = new Intent(SignInActivity.this, dialog_otp.class);
+                    intent.putExtra("phoneNumber", phoneNumber);
+                    startActivity(intent);
+                } else {
+                    showToast("Please enter a valid phone number.");
+                }
+            }
+        });
+        builder.setNegativeButton("Cancel", null);
+        phoneNumberDialog = builder.create();
+        phoneNumberDialog.show();
+    }
+
+
+
+
     private void loading(Boolean loading) {
         if (loading) {
             binding.buttonSignIn.setVisibility(View.INVISIBLE);

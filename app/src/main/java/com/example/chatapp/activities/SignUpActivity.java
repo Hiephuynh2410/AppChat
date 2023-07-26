@@ -17,6 +17,7 @@ import android.util.Base64;
 import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -44,13 +45,14 @@ public class SignUpActivity extends AppCompatActivity {
     private ActivitySignUpBinding binding;
     private PreferenceManager preferenceManager;
     private String encodeImage;
-
+    private EditText inputPhoneNumber;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivitySignUpBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         preferenceManager = new PreferenceManager(getApplicationContext());
+        inputPhoneNumber = binding.inputPhoneNumber; // Initialize the inputPhoneNumber EditText
         setListeners();
 
     }
@@ -81,6 +83,7 @@ public class SignUpActivity extends AppCompatActivity {
         HashMap<String, Object> user = new HashMap<>();
         user.put(constant.KEY_NAME, binding.inputName.getText().toString());
         user.put(constant.KEY_EMAIL, binding.inputemail.getText().toString());
+        user.put(constant.KEY_PHONE, inputPhoneNumber.getText().toString());
         user.put(constant.KEY_PASSWORD, binding.inputPassword.getText().toString());
         user.put(constant.KEY_IMAGE, encodeImage);
         database.collection(constant.KEY_COLLECTION_USERS).add(user)
@@ -143,7 +146,11 @@ public class SignUpActivity extends AppCompatActivity {
         String email = binding.inputemail.getText().toString().trim();
         String password = binding.inputPassword.getText().toString().trim();
         String confirmPassword = binding.inputConfirmPassword.getText().toString().trim();
-
+        String phoneNumber = inputPhoneNumber.getText().toString().trim();
+        if (TextUtils.isEmpty(phoneNumber)) {
+            inputPhoneNumber.setError("Enter phone number");
+            return false;
+        }
         if (name.contains(" ")) {
             binding.inputName.setError("Name cannot contain spaces");
             return false;

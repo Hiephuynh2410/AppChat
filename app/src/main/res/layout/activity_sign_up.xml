@@ -61,6 +61,20 @@
             android:textColor="@color/primary_text"
             android:textSize="@dimen/_13ssp"/>
         <EditText
+            android:id="@+id/inputPhoneNumber"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_45sdp"
+            android:layout_marginTop="@dimen/_16sdp"
+            android:background="@color/input_background"
+            android:hint="phone_number"
+            android:imeOptions="actionDone"
+            android:importantForAutofill="no"
+            android:paddingStart="@dimen/_16sdp"
+            android:paddingEnd="@dimen/_16sdp"
+            android:inputType="phone"
+            android:textColor="@color/primary_text"
+            android:textSize="@dimen/_13ssp" />
+        <EditText
             android:id="@+id/inputemail"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_45sdp"

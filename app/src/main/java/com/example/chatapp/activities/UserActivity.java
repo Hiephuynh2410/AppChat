@@ -54,43 +54,83 @@ public class UserActivity extends BaseActivity implements UserListener {
         binding.imagesBack.setOnClickListener(v -> onBackPressed());
     }
 
+    //    private void getUser() {
+    //        loading(true);
+    //        FirebaseFirestore database = FirebaseFirestore.getInstance();
+    //        database.collection(constant.KEY_COLLECTION_USERS)
+    //                .get()
+    //                .addOnCompleteListener(task -> {
+    //                    loading(false);
+    //
+    //                    // Xử lý danh sách người dùng để lọc theo tìm kiếm
+    //                    List<User> filteredUsers = new ArrayList<>();
+    //                    for (QueryDocumentSnapshot queryDocumentSnapshot : task.getResult()) {
+    //
+    //                        // Lấy thông tin người dùng từ Firestore
+    //                        User user = new User();
+    //                        user.name = queryDocumentSnapshot.getString(constant.KEY_NAME);
+    //                        user.email = queryDocumentSnapshot.getString(constant.KEY_EMAIL);
+    //                        user.image = queryDocumentSnapshot.getString(constant.KEY_IMAGE);
+    //                        user.token = queryDocumentSnapshot.getString(constant.KEY_FCM_TOKEN);
+    //                        user.id = queryDocumentSnapshot.getId();
+    //
+    //                        // Kiểm tra nếu tên người dùng chứa chuỗi tìm kiếm
+    //                        String searchQuery = binding.searchView.getQuery().toString().toLowerCase();
+    //                        if (user.name.toLowerCase().contains(searchQuery)) {
+    //                            filteredUsers.add(user);
+    //                        }
+    //                    }
+    //
+    //                    // Hiển thị danh sách người dùng đã lọc trong RecyclerView
+    //                    if (filteredUsers.size() > 0) {
+    //                        UserAdapter userAdapter = new UserAdapter(filteredUsers, this);
+    //                        binding.userRecyclerView.setAdapter(userAdapter);
+    //                        binding.userRecyclerView.setVisibility(View.VISIBLE);
+    //                    } else {
+    //                        showErr();
+    //                    }
+    //                });
+    //    }
+
     private void getUser() {
-        loading(true);
-        FirebaseFirestore database = FirebaseFirestore.getInstance();
-        database.collection(constant.KEY_COLLECTION_USERS)
-                .get()
-                .addOnCompleteListener(task -> {
-                    loading(false);
+    loading(true);
+    FirebaseFirestore database = FirebaseFirestore.getInstance();
+    database.collection(constant.KEY_COLLECTION_USERS)
+            .get()
+            .addOnCompleteListener(task -> {
+                loading(false);
 
-                    // Xử lý danh sách người dùng để lọc theo tìm kiếm
-                    List<User> filteredUsers = new ArrayList<>();
-                    for (QueryDocumentSnapshot queryDocumentSnapshot : task.getResult()) {
+                // Get the current user ID
+                String currentUserId = preferenceManager.getString(constant.KEY_USER_ID);
 
-                        // Lấy thông tin người dùng từ Firestore
-                        User user = new User();
-                        user.name = queryDocumentSnapshot.getString(constant.KEY_NAME);
-                        user.email = queryDocumentSnapshot.getString(constant.KEY_EMAIL);
-                        user.image = queryDocumentSnapshot.getString(constant.KEY_IMAGE);
-                        user.token = queryDocumentSnapshot.getString(constant.KEY_FCM_TOKEN);
-                        user.id = queryDocumentSnapshot.getId();
+                // Process the user list to filter based on search and exclude the current user
+                List<User> filteredUsers = new ArrayList<>();
+                for (QueryDocumentSnapshot queryDocumentSnapshot : task.getResult()) {
+                    // Retrieve user information from Firestore
+                    User user = new User();
+                    user.name = queryDocumentSnapshot.getString(constant.KEY_NAME);
+                    user.email = queryDocumentSnapshot.getString(constant.KEY_EMAIL);
+                    user.image = queryDocumentSnapshot.getString(constant.KEY_IMAGE);
+                    user.token = queryDocumentSnapshot.getString(constant.KEY_FCM_TOKEN);
+                    user.id = queryDocumentSnapshot.getId();
 
-                        // Kiểm tra nếu tên người dùng chứa chuỗi tìm kiếm
-                        String searchQuery = binding.searchView.getQuery().toString().toLowerCase();
-                        if (user.name.toLowerCase().contains(searchQuery)) {
-                            filteredUsers.add(user);
-                        }
+                    // Check if the user's name contains the search query
+                    String searchQuery = binding.searchView.getQuery().toString().toLowerCase();
+                    if (user.name.toLowerCase().contains(searchQuery) && !user.id.equals(currentUserId)) {
+                        filteredUsers.add(user);
                     }
+                }
 
-                    // Hiển thị danh sách người dùng đã lọc trong RecyclerView
-                    if (filteredUsers.size() > 0) {
-                        UserAdapter userAdapter = new UserAdapter(filteredUsers, this);
-                        binding.userRecyclerView.setAdapter(userAdapter);
-                        binding.userRecyclerView.setVisibility(View.VISIBLE);
-                    } else {
-                        showErr();
-                    }
-                });
-    }
+                // Display the filtered user list in the RecyclerView
+                if (filteredUsers.size() > 0) {
+                    UserAdapter userAdapter = new UserAdapter(filteredUsers, this);
+                    binding.userRecyclerView.setAdapter(userAdapter);
+                    binding.userRecyclerView.setVisibility(View.VISIBLE);
+                } else {
+                    showErr();
+                }
+            });
+}
 
     private void showErr() {
         binding.textErrorMess.setText(String.format("%s", "No User available"));

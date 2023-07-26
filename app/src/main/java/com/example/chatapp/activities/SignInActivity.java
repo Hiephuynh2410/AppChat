@@ -45,10 +45,10 @@ public class SignInActivity extends AppCompatActivity {
 
     private ActivitySignInBinding binding;
     private PreferenceManager preferenceManager;
-
     Dialog dialog;
     TextView btnotp;
     private AlertDialog phoneNumberDialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -83,6 +83,7 @@ public class SignInActivity extends AppCompatActivity {
         });
 
     }
+
     private void checkCredentials() {
         loading(true);
         FirebaseFirestore database = FirebaseFirestore.getInstance();
@@ -127,9 +128,6 @@ public class SignInActivity extends AppCompatActivity {
         phoneNumberDialog.show();
     }
 
-
-
-
     private void loading(Boolean loading) {
         if (loading) {
             binding.buttonSignIn.setVisibility(View.INVISIBLE);
@@ -143,23 +141,23 @@ public class SignInActivity extends AppCompatActivity {
         loading(true);
         FirebaseFirestore database = FirebaseFirestore.getInstance();
         database.collection(constant.KEY_COLLECTION_USERS)
-                .whereEqualTo(constant.KEY_EMAIL, binding.inputemail.getText().toString())
-                .whereEqualTo(constant.KEY_PASSWORD, binding.inputPassword.getText().toString())
-                .get().addOnCompleteListener(task -> {
-                    if(task.isSuccessful() && task.getResult() != null && task.getResult().getDocuments().size() > 0) {
-                        DocumentSnapshot documentSnapshot = task.getResult().getDocuments().get(0);
-                        preferenceManager.putBoolean(constant.KEY_IS_SIGNED_IN, true);
-                        preferenceManager.putString(constant.KEY_USER_ID, documentSnapshot.getId());
-                        preferenceManager.putString(constant.KEY_NAME, documentSnapshot.getString(constant.KEY_NAME));
-                        preferenceManager.putString(constant.KEY_IMAGE, documentSnapshot.getString(constant.KEY_IMAGE));
-                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                        startActivity(intent);
-                    }  else {
-                        loading(false);
-                        showToast("Unable to Sign In");
-                    }
-                });
+            .whereEqualTo(constant.KEY_EMAIL, binding.inputemail.getText().toString())
+            .whereEqualTo(constant.KEY_PASSWORD, binding.inputPassword.getText().toString())
+            .get().addOnCompleteListener(task -> {
+                if(task.isSuccessful() && task.getResult() != null && task.getResult().getDocuments().size() > 0) {
+                    DocumentSnapshot documentSnapshot = task.getResult().getDocuments().get(0);
+                    preferenceManager.putBoolean(constant.KEY_IS_SIGNED_IN, true);
+                    preferenceManager.putString(constant.KEY_USER_ID, documentSnapshot.getId());
+                    preferenceManager.putString(constant.KEY_NAME, documentSnapshot.getString(constant.KEY_NAME));
+                    preferenceManager.putString(constant.KEY_IMAGE, documentSnapshot.getString(constant.KEY_IMAGE));
+                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    startActivity(intent);
+                }  else {
+                    loading(false);
+                    showToast("Unable to Sign In");
+                }
+            });
     }
 
     private void showToast(String mess) {
@@ -167,18 +165,6 @@ public class SignInActivity extends AppCompatActivity {
     }
 
     private  Boolean isValidSignIn() {
-//        if(binding.inputemail.getText().toString().trim().isEmpty()) {
-//            showToast("enter email");
-//            return false;
-//        } else if (!Patterns.EMAIL_ADDRESS.matcher(binding.inputemail.getText().toString()).matches()) {
-//            showToast("enter valid email");
-//            return false;
-//        } else if(binding.inputPassword.getText().toString().trim().isEmpty()) {
-//            showToast("enter password");
-//            return false;
-//        } else {
-//            return true;
-//        }
         String email, Password;
         email = String.valueOf(binding.inputemail.getText());
         Password = String.valueOf(binding.inputPassword.getText());

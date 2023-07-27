@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Toast;
 
 
+import com.example.chatapp.R;
 import com.example.chatapp.adapter.RecentConversationAdapter;
 import com.example.chatapp.databinding.ActivityMainBinding;
 import com.example.chatapp.listeners.ConversionListener;
@@ -24,6 +25,7 @@ import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.messaging.FirebaseMessaging;
+import com.makeramen.roundedimageview.RoundedImageView;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -39,6 +41,7 @@ public class MainActivity extends BaseActivity  implements ConversionListener {
     private List<ChatMess> conversation;
     private RecentConversationAdapter conversationAdapter;
     private FirebaseFirestore db;
+    private RoundedImageView imgview;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,6 +53,15 @@ public class MainActivity extends BaseActivity  implements ConversionListener {
         getToken();
         setListener();
         listenConversation();
+        imgview = findViewById(R.id.imageProfile);
+        imgview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), profileImage.class);
+                startActivity(intent);
+                finish();
+            }
+        });
     }
 
     private  void init() {

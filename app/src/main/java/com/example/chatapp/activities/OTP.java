@@ -1,9 +1,11 @@
 package com.example.chatapp.activities;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -61,7 +63,7 @@ public class OTP extends AppCompatActivity {
                 new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
                     @Override
                     public void onVerificationCompleted(@NonNull PhoneAuthCredential phoneAuthCredential) {
-
+                        // Not needed in this case. User input is required.
                     }
 
                     @Override
@@ -73,12 +75,53 @@ public class OTP extends AppCompatActivity {
                     public void onCodeSent(@NonNull String s, @NonNull PhoneAuthProvider.ForceResendingToken forceResendingToken) {
                         verificationId = s;
 
-                        Intent intent = new Intent(OTP.this, MainActivity.class);
-                        intent.putExtra("verificationId", verificationId);
-                        startActivity(intent);
-                        finish();
+                        // Show dialog to enter OTP
+                        showOTPDialog();
                     }
                 }
         );
     }
+
+    private void showOTPDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Enter OTP");
+        View view = getLayoutInflater().inflate(R.layout.activity_dialog_otp, null);
+        EditText editTextOTP = view.findViewById(R.id.t2);
+        builder.setView(view);
+        builder.setPositiveButton("Verify OTP", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                String otp = editTextOTP.getText().toString().trim();
+                if (!otp.isEmpty()) {
+                    // Verify the OTP
+                    verifyOTP(otp);
+                } else {
+                    Toast.makeText(OTP.this, "Please enter the OTP.", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+        builder.setNegativeButton("Cancel", null);
+        builder.setCancelable(false);
+        AlertDialog otpDialog = builder.create();
+        otpDialog.show();
+    }
+    private void verifyOTP(String otp) {
+        PhoneAuthCredential credential = PhoneAuthProvider.getCredential(verificationId, otp);
+        firebaseAuth.signInWithCredential(credential)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            Intent intent = new Intent(OTP.this, MainActivity.class);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                            startActivity(intent);
+                            finish();
+                        } else {
+                            Toast.makeText(OTP.this, "Verification failed. Please enter a valid OTP.", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+    }
+
+
 }

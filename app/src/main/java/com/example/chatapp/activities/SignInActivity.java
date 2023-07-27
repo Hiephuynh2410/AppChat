@@ -77,8 +77,8 @@ public class SignInActivity extends AppCompatActivity {
         binding.TextCreateNewaccount.setOnClickListener(v -> startActivity(new Intent(getApplicationContext(), SignUpActivity.class)));
         binding.buttonSignIn.setOnClickListener(v -> {
             if (isValidSignIn()) {
-                SignIn();
-              //  checkCredentials();
+                //SignIn();
+                checkCredentials();
             }
         });
     }

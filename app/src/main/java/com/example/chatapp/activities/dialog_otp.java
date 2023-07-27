@@ -37,7 +37,7 @@ public class dialog_otp extends AppCompatActivity {
         setContentView(R.layout.activity_dialog_otp);
 
         editTextOTP = findViewById(R.id.t2);
-        buttonVerify = findViewById(R.id.b2);
+//        buttonVerify = findViewById(R.id.b2);
 
         firebaseAuth = FirebaseAuth.getInstance();
 
@@ -59,7 +59,6 @@ public class dialog_otp extends AppCompatActivity {
                 }
             }
         });
-
         // Send OTP to the provided phone number
         sendVerificationCode();
     }
@@ -123,61 +122,4 @@ public class dialog_otp extends AppCompatActivity {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
-
-//    private EditText editTextOTP;
-//    private Button buttonVerifyOTP;
-//
-//    private FirebaseAuth firebaseAuth;
-//
-//    private String verificationId;
-//
-//    @Override
-//    protected void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//        setContentView(R.layout.activity_dialog_otp);
-//
-//        editTextOTP = findViewById(R.id.t2);
-//        buttonVerifyOTP = findViewById(R.id.b2);
-//
-//        firebaseAuth = FirebaseAuth.getInstance();
-//
-//        Intent intent = getIntent();
-//        if (intent != null) {
-//            verificationId = intent.getStringExtra("verificationId");
-//        }
-//
-//        buttonVerifyOTP.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                String otp = editTextOTP.getText().toString().trim();
-//                if (TextUtils.isEmpty(otp)) {
-//                    Toast.makeText(getApplicationContext(), "Please enter the OTP.", Toast.LENGTH_SHORT).show();
-//                } else {
-//                    verifyOTP(otp);
-//                }
-//            }
-//        });
-//    }
-//    private void verifyOTP(String otp) {
-//        PhoneAuthCredential credential = PhoneAuthProvider.getCredential(verificationId, otp);
-//        signInWithPhoneAuthCredential(credential);
-//    }
-//
-//    private void signInWithPhoneAuthCredential(PhoneAuthCredential credential) {
-//        firebaseAuth.signInWithCredential(credential)
-//                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-//                    @Override
-//                    public void onComplete(@NonNull Task<AuthResult> task) {
-//                        if (task.isSuccessful()) {
-//                            // Sign-in success, update UI with the signed-in user's information.
-//                            Toast.makeText(getApplicationContext(), "OTP verification successful.", Toast.LENGTH_SHORT).show();
-//                            // Perform any additional actions after successful sign-in, e.g., navigate to the main activity.
-//                            // ...
-//                        } else {
-//                            // Sign-in failed, display a message to the user.
-//                            Toast.makeText(getApplicationContext(), "OTP verification failed. Please try again.", Toast.LENGTH_SHORT).show();
-//                        }
-//                    }
-//                });
-//    }
 }

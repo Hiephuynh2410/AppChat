@@ -76,12 +76,11 @@ public class SignInActivity extends AppCompatActivity {
     private void setListeners() {
         binding.TextCreateNewaccount.setOnClickListener(v -> startActivity(new Intent(getApplicationContext(), SignUpActivity.class)));
         binding.buttonSignIn.setOnClickListener(v -> {
-            if(isValidSignIn()) {
+            if (isValidSignIn()) {
                 SignIn();
-//                checkCredentials();
+              //  checkCredentials();
             }
         });
-
     }
 
     private void checkCredentials() {
@@ -92,13 +91,17 @@ public class SignInActivity extends AppCompatActivity {
                 .whereEqualTo(constant.KEY_PASSWORD, binding.inputPassword.getText().toString())
                 .get().addOnCompleteListener(task -> {
                     if (task.isSuccessful() && task.getResult() != null && task.getResult().getDocuments().size() > 0) {
-                        // Email and password are correct, show dialog to enter phone number
-                        loading(false);
+                        DocumentSnapshot documentSnapshot = task.getResult().getDocuments().get(0);
+                        preferenceManager.putBoolean(constant.KEY_IS_SIGNED_IN, true);
+                        preferenceManager.putString(constant.KEY_USER_ID, documentSnapshot.getId());
+                        preferenceManager.putString(constant.KEY_NAME, documentSnapshot.getString(constant.KEY_NAME));
+                        preferenceManager.putString(constant.KEY_IMAGE, documentSnapshot.getString(constant.KEY_IMAGE));
+
+                        // Show dialog to enter phone number
                         showPhoneNumberDialog();
                     } else {
-                        // Invalid credentials
                         loading(false);
-                        showToast("Unable to Sign In");
+                        showToast("Invalid credentials. Please try again.");
                     }
                 });
     }
@@ -115,7 +118,7 @@ public class SignInActivity extends AppCompatActivity {
                 String phoneNumber = editTextPhoneNumber.getText().toString().trim();
                 if (!TextUtils.isEmpty(phoneNumber)) {
                     // Start OTP activity and pass the phone number
-                    Intent intent = new Intent(SignInActivity.this, dialog_otp.class);
+                    Intent intent = new Intent(SignInActivity.this, OTP.class);
                     intent.putExtra("phoneNumber", phoneNumber);
                     startActivity(intent);
                 } else {
@@ -124,7 +127,7 @@ public class SignInActivity extends AppCompatActivity {
             }
         });
         builder.setNegativeButton("Cancel", null);
-        phoneNumberDialog = builder.create();
+        AlertDialog phoneNumberDialog = builder.create();
         phoneNumberDialog.show();
     }
 

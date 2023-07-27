@@ -1,0 +1,376 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    package="com.example.chatapp"
+4    android:versionCode="1"
+5    android:versionName="1.0" >
+6
+7    <uses-sdk
+8        android:minSdkVersion="26"
+8-->/Users/hiephuynh/Desktop/AppChat/app/src/main/AndroidManifest.xml
+9        android:targetSdkVersion="33" />
+9-->/Users/hiephuynh/Desktop/AppChat/app/src/main/AndroidManifest.xml
+10
+11    <uses-permission android:name="android.permission.INTERNET" />
+11-->/Users/hiephuynh/Desktop/AppChat/app/src/main/AndroidManifest.xml:5:5-67
+11-->/Users/hiephuynh/Desktop/AppChat/app/src/main/AndroidManifest.xml:5:22-64
+12    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+12-->[com.google.firebase:firebase-messaging:23.1.0] /Users/hiephuynh/.gradle/caches/transforms-3/fbe00aa41c0892c1637e15fba7313c58/transformed/firebase-messaging-23.1.0/AndroidManifest.xml:24:5-79
+12-->[com.google.firebase:firebase-messaging:23.1.0] /Users/hiephuynh/.gradle/caches/transforms-3/fbe00aa41c0892c1637e15fba7313c58/transformed/firebase-messaging-23.1.0/AndroidManifest.xml:24:22-76
+13    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+13-->[com.google.firebase:firebase-messaging:23.1.0] /Users/hiephuynh/.gradle/caches/transforms-3/fbe00aa41c0892c1637e15fba7313c58/transformed/firebase-messaging-23.1.0/AndroidManifest.xml:25:5-77
+13-->[com.google.firebase:firebase-messaging:23.1.0] /Users/hiephuynh/.gradle/caches/transforms-3/fbe00aa41c0892c1637e15fba7313c58/transformed/firebase-messaging-23.1.0/AndroidManifest.xml:25:22-74
+14    <uses-permission android:name="android.permission.WAKE_LOCK" /> <!-- Required by older versions of Google Play services to create IID tokens -->
+14-->[com.google.firebase:firebase-messaging:23.1.0] /Users/hiephuynh/.gradle/caches/transforms-3/fbe00aa41c0892c1637e15fba7313c58/transformed/firebase-messaging-23.1.0/AndroidManifest.xml:26:5-68
+14-->[com.google.firebase:firebase-messaging:23.1.0] /Users/hiephuynh/.gradle/caches/transforms-3/fbe00aa41c0892c1637e15fba7313c58/transformed/firebase-messaging-23.1.0/AndroidManifest.xml:26:22-65
+15    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+15-->[com.google.firebase:firebase-messaging:23.1.0] /Users/hiephuynh/.gradle/caches/transforms-3/fbe00aa41c0892c1637e15fba7313c58/transformed/firebase-messaging-23.1.0/AndroidManifest.xml:28:5-82
+15-->[com.google.firebase:firebase-messaging:23.1.0] /Users/hiephuynh/.gradle/caches/transforms-3/fbe00aa41c0892c1637e15fba7313c58/transformed/firebase-messaging-23.1.0/AndroidManifest.xml:28:22-79
+16
+17    <permission
+17-->[androidx.core:core:1.9.0] /Users/hiephuynh/.gradle/caches/transforms-3/95b65b6274b8644876ef83feb6f099dd/transformed/core-1.9.0/AndroidManifest.xml:22:5-24:47
+18        android:name="com.example.chatapp.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
+18-->[androidx.core:core:1.9.0] /Users/hiephuynh/.gradle/caches/transforms-3/95b65b6274b8644876ef83feb6f099dd/transformed/core-1.9.0/AndroidManifest.xml:23:9-81
+19        android:protectionLevel="signature" />
+19-->[androidx.core:core:1.9.0] /Users/hiephuynh/.gradle/caches/transforms-3/95b65b6274b8644876ef83feb6f099dd/transformed/core-1.9.0/AndroidManifest.xml:24:9-44
+20
+21    <uses-permission android:name="com.example.chatapp.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" />
+21-->[androidx.core:core:1.9.0] /Users/hiephuynh/.gradle/caches/transforms-3/95b65b6274b8644876ef83feb6f099dd/transformed/core-1.9.0/AndroidManifest.xml:26:5-97
+21-->[androidx.core:core:1.9.0] /Users/hiephuynh/.gradle/caches/transforms-3/95b65b6274b8644876ef83feb6f099dd/transformed/core-1.9.0/AndroidManifest.xml:26:22-94
+22
+23    <application
+23-->/Users/hiephuynh/Desktop/AppChat/app/src/main/AndroidManifest.xml:6:5-48:19
+24        android:allowBackup="true"
+24-->/Users/hiephuynh/Desktop/AppChat/app/src/main/AndroidManifest.xml:7:9-35
+25        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+25-->[androidx.core:core:1.9.0] /Users/hiephuynh/.gradle/caches/transforms-3/95b65b6274b8644876ef83feb6f099dd/transformed/core-1.9.0/AndroidManifest.xml:28:18-86
+26        android:dataExtractionRules="@xml/data_extraction_rules"
+26-->/Users/hiephuynh/Desktop/AppChat/app/src/main/AndroidManifest.xml:8:9-65
+27        android:debuggable="true"
+28        android:extractNativeLibs="false"
+29        android:fullBackupContent="@xml/backup_rules"
+29-->/Users/hiephuynh/Desktop/AppChat/app/src/main/AndroidManifest.xml:9:9-54
+30        android:icon="@mipmap/ic_launcher"
+30-->/Users/hiephuynh/Desktop/AppChat/app/src/main/AndroidManifest.xml:10:9-43
+31        android:label="Messenger Fake"
+31-->/Users/hiephuynh/Desktop/AppChat/app/src/main/AndroidManifest.xml:11:9-39
+32        android:roundIcon="@mipmap/ic_launcher_round"
+32-->/Users/hiephuynh/Desktop/AppChat/app/src/main/AndroidManifest.xml:12:9-54
+33        android:supportsRtl="true"
+33-->/Users/hiephuynh/Desktop/AppChat/app/src/main/AndroidManifest.xml:13:9-35
+34        android:testOnly="true"
+35        android:theme="@style/Theme.Material3.Light" >
+35-->/Users/hiephuynh/Desktop/AppChat/app/src/main/AndroidManifest.xml:14:9-53
+36        <activity
+36-->/Users/hiephuynh/Desktop/AppChat/app/src/main/AndroidManifest.xml:16:9-19:57
+37            android:name="com.example.chatapp.activities.chatActivity"
+37-->/Users/hiephuynh/Desktop/AppChat/app/src/main/AndroidManifest.xml:17:13-52
+38            android:exported="false"
+38-->/Users/hiephuynh/Desktop/AppChat/app/src/main/AndroidManifest.xml:18:13-37
+39            android:windowSoftInputMode="adjustResize" />
+39-->/Users/hiephuynh/Desktop/AppChat/app/src/main/AndroidManifest.xml:19:13-55
+40        <activity
+40-->/Users/hiephuynh/Desktop/AppChat/app/src/main/AndroidManifest.xml:20:9-23:54
+41            android:name="com.example.chatapp.activities.UserActivity"
+41-->/Users/hiephuynh/Desktop/AppChat/app/src/main/AndroidManifest.xml:21:13-52
+42            android:exported="false"
+42-->/Users/hiephuynh/Desktop/AppChat/app/src/main/AndroidManifest.xml:22:13-37
+43            android:windowSoftInputMode="adjustPan" />
+43-->/Users/hiephuynh/Desktop/AppChat/app/src/main/AndroidManifest.xml:23:13-52
+44        <activity
+44-->/Users/hiephuynh/Desktop/AppChat/app/src/main/AndroidManifest.xml:24:9-26:40
+45            android:name="com.example.chatapp.activities.SignUpActivity"
+45-->/Users/hiephuynh/Desktop/AppChat/app/src/main/AndroidManifest.xml:25:13-54
+46            android:exported="false" />
+46-->/Users/hiephuynh/Desktop/AppChat/app/src/main/AndroidManifest.xml:26:13-37
+47        <activity
+47-->/Users/hiephuynh/Desktop/AppChat/app/src/main/AndroidManifest.xml:27:9-36:20
+48            android:name="com.example.chatapp.activities.SignInActivity"
+48-->/Users/hiephuynh/Desktop/AppChat/app/src/main/AndroidManifest.xml:28:13-54
+49            android:exported="true"
+49-->/Users/hiephuynh/Desktop/AppChat/app/src/main/AndroidManifest.xml:29:13-36
+50            android:windowSoftInputMode="adjustResize" >
+50-->/Users/hiephuynh/Desktop/AppChat/app/src/main/AndroidManifest.xml:30:13-55
+51            <intent-filter>
+51-->/Users/hiephuynh/Desktop/AppChat/app/src/main/AndroidManifest.xml:31:13-35:29
+52                <action android:name="android.intent.action.MAIN" />
+52-->/Users/hiephuynh/Desktop/AppChat/app/src/main/AndroidManifest.xml:32:17-69
+52-->/Users/hiephuynh/Desktop/AppChat/app/src/main/AndroidManifest.xml:32:25-66
+53
+54                <category android:name="android.intent.category.LAUNCHER" />
+54-->/Users/hiephuynh/Desktop/AppChat/app/src/main/AndroidManifest.xml:34:17-77
+54-->/Users/hiephuynh/Desktop/AppChat/app/src/main/AndroidManifest.xml:34:27-74
+55            </intent-filter>
+56        </activity>
+57        <activity
+57-->/Users/hiephuynh/Desktop/AppChat/app/src/main/AndroidManifest.xml:37:9-39:40
+58            android:name="com.example.chatapp.activities.MainActivity"
+58-->/Users/hiephuynh/Desktop/AppChat/app/src/main/AndroidManifest.xml:38:13-52
+59            android:exported="false" />
+59-->/Users/hiephuynh/Desktop/AppChat/app/src/main/AndroidManifest.xml:39:13-37
+60
+61        <service
+61-->/Users/hiephuynh/Desktop/AppChat/app/src/main/AndroidManifest.xml:41:9-47:19
+62            android:name="com.example.chatapp.firebase.MessaingService"
+62-->/Users/hiephuynh/Desktop/AppChat/app/src/main/AndroidManifest.xml:42:13-53
+63            android:exported="false" >
+63-->/Users/hiephuynh/Desktop/AppChat/app/src/main/AndroidManifest.xml:43:13-37
+64            <intent-filter>
+64-->/Users/hiephuynh/Desktop/AppChat/app/src/main/AndroidManifest.xml:44:13-46:29
+65                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+65-->/Users/hiephuynh/Desktop/AppChat/app/src/main/AndroidManifest.xml:45:17-78
+65-->/Users/hiephuynh/Desktop/AppChat/app/src/main/AndroidManifest.xml:45:25-75
+66            </intent-filter>
+67        </service>
+68
+69        <receiver
+69-->[com.google.firebase:firebase-messaging:23.1.0] /Users/hiephuynh/.gradle/caches/transforms-3/fbe00aa41c0892c1637e15fba7313c58/transformed/firebase-messaging-23.1.0/AndroidManifest.xml:31:9-38:20
+70            android:name="com.google.firebase.iid.FirebaseInstanceIdReceiver"
+70-->[com.google.firebase:firebase-messaging:23.1.0] /Users/hiephuynh/.gradle/caches/transforms-3/fbe00aa41c0892c1637e15fba7313c58/transformed/firebase-messaging-23.1.0/AndroidManifest.xml:32:13-78
+71            android:exported="true"
+71-->[com.google.firebase:firebase-messaging:23.1.0] /Users/hiephuynh/.gradle/caches/transforms-3/fbe00aa41c0892c1637e15fba7313c58/transformed/firebase-messaging-23.1.0/AndroidManifest.xml:33:13-36
+72            android:permission="com.google.android.c2dm.permission.SEND" >
+72-->[com.google.firebase:firebase-messaging:23.1.0] /Users/hiephuynh/.gradle/caches/transforms-3/fbe00aa41c0892c1637e15fba7313c58/transformed/firebase-messaging-23.1.0/AndroidManifest.xml:34:13-73
+73            <intent-filter>
+73-->[com.google.firebase:firebase-messaging:23.1.0] /Users/hiephuynh/.gradle/caches/transforms-3/fbe00aa41c0892c1637e15fba7313c58/transformed/firebase-messaging-23.1.0/AndroidManifest.xml:35:13-37:29
+74                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+74-->[com.google.firebase:firebase-messaging:23.1.0] /Users/hiephuynh/.gradle/caches/transforms-3/fbe00aa41c0892c1637e15fba7313c58/transformed/firebase-messaging-23.1.0/AndroidManifest.xml:36:17-81
+74-->[com.google.firebase:firebase-messaging:23.1.0] /Users/hiephuynh/.gradle/caches/transforms-3/fbe00aa41c0892c1637e15fba7313c58/transformed/firebase-messaging-23.1.0/AndroidManifest.xml:36:25-78
+75            </intent-filter>
+76        </receiver>
+77        <!--
+78             FirebaseMessagingService performs security checks at runtime,
+79             but set to not exported to explicitly avoid allowing another app to call it.
+80        -->
+81        <service
+81-->[com.google.firebase:firebase-messaging:23.1.0] /Users/hiephuynh/.gradle/caches/transforms-3/fbe00aa41c0892c1637e15fba7313c58/transformed/firebase-messaging-23.1.0/AndroidManifest.xml:44:9-51:19
+82            android:name="com.google.firebase.messaging.FirebaseMessagingService"
+82-->[com.google.firebase:firebase-messaging:23.1.0] /Users/hiephuynh/.gradle/caches/transforms-3/fbe00aa41c0892c1637e15fba7313c58/transformed/firebase-messaging-23.1.0/AndroidManifest.xml:45:13-82
+83            android:directBootAware="true"
+83-->[com.google.firebase:firebase-messaging:23.1.0] /Users/hiephuynh/.gradle/caches/transforms-3/fbe00aa41c0892c1637e15fba7313c58/transformed/firebase-messaging-23.1.0/AndroidManifest.xml:46:13-43
+84            android:exported="false" >
+84-->[com.google.firebase:firebase-messaging:23.1.0] /Users/hiephuynh/.gradle/caches/transforms-3/fbe00aa41c0892c1637e15fba7313c58/transformed/firebase-messaging-23.1.0/AndroidManifest.xml:47:13-37
+85            <intent-filter android:priority="-500" >
+85-->/Users/hiephuynh/Desktop/AppChat/app/src/main/AndroidManifest.xml:44:13-46:29
+86                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+86-->/Users/hiephuynh/Desktop/AppChat/app/src/main/AndroidManifest.xml:45:17-78
+86-->/Users/hiephuynh/Desktop/AppChat/app/src/main/AndroidManifest.xml:45:25-75
+87            </intent-filter>
+88        </service>
+89        <service
+89-->[com.google.firebase:firebase-messaging:23.1.0] /Users/hiephuynh/.gradle/caches/transforms-3/fbe00aa41c0892c1637e15fba7313c58/transformed/firebase-messaging-23.1.0/AndroidManifest.xml:52:9-58:19
+90            android:name="com.google.firebase.components.ComponentDiscoveryService"
+90-->[com.google.firebase:firebase-messaging:23.1.0] /Users/hiephuynh/.gradle/caches/transforms-3/fbe00aa41c0892c1637e15fba7313c58/transformed/firebase-messaging-23.1.0/AndroidManifest.xml:53:13-84
+91            android:directBootAware="true"
+91-->[com.google.firebase:firebase-common:20.3.2] /Users/hiephuynh/.gradle/caches/transforms-3/5de653b77a2a71698f5640771a4e191a/transformed/firebase-common-20.3.2/AndroidManifest.xml:34:13-43
+92            android:exported="false" >
+92-->[com.google.firebase:firebase-messaging:23.1.0] /Users/hiephuynh/.gradle/caches/transforms-3/fbe00aa41c0892c1637e15fba7313c58/transformed/firebase-messaging-23.1.0/AndroidManifest.xml:54:13-37
+93            <meta-data
+93-->[com.google.firebase:firebase-messaging:23.1.0] /Users/hiephuynh/.gradle/caches/transforms-3/fbe00aa41c0892c1637e15fba7313c58/transformed/firebase-messaging-23.1.0/AndroidManifest.xml:55:13-57:85
+94                android:name="com.google.firebase.components:com.google.firebase.messaging.FirebaseMessagingRegistrar"
+94-->[com.google.firebase:firebase-messaging:23.1.0] /Users/hiephuynh/.gradle/caches/transforms-3/fbe00aa41c0892c1637e15fba7313c58/transformed/firebase-messaging-23.1.0/AndroidManifest.xml:56:17-119
+95                android:value="com.google.firebase.components.ComponentRegistrar" />
+95-->[com.google.firebase:firebase-messaging:23.1.0] /Users/hiephuynh/.gradle/caches/transforms-3/fbe00aa41c0892c1637e15fba7313c58/transformed/firebase-messaging-23.1.0/AndroidManifest.xml:57:17-82
+96            <meta-data
+96-->[com.google.firebase:firebase-firestore:24.6.1] /Users/hiephuynh/.gradle/caches/transforms-3/89c1aba88861d50aa68c00aec89616b3/transformed/firebase-firestore-24.6.1/AndroidManifest.xml:19:13-21:85
+97                android:name="com.google.firebase.components:com.google.firebase.firestore.FirestoreRegistrar"
+97-->[com.google.firebase:firebase-firestore:24.6.1] /Users/hiephuynh/.gradle/caches/transforms-3/89c1aba88861d50aa68c00aec89616b3/transformed/firebase-firestore-24.6.1/AndroidManifest.xml:20:17-111
+98                android:value="com.google.firebase.components.ComponentRegistrar" />
+98-->[com.google.firebase:firebase-firestore:24.6.1] /Users/hiephuynh/.gradle/caches/transforms-3/89c1aba88861d50aa68c00aec89616b3/transformed/firebase-firestore-24.6.1/AndroidManifest.xml:21:17-82
+99            <meta-data
+99-->[com.google.firebase:firebase-auth:22.0.0] /Users/hiephuynh/.gradle/caches/transforms-3/3945bd86f507ac8d8ae3b4b311acb205/transformed/firebase-auth-22.0.0/AndroidManifest.xml:69:13-71:85
+100                android:name="com.google.firebase.components:com.google.firebase.auth.FirebaseAuthRegistrar"
+100-->[com.google.firebase:firebase-auth:22.0.0] /Users/hiephuynh/.gradle/caches/transforms-3/3945bd86f507ac8d8ae3b4b311acb205/transformed/firebase-auth-22.0.0/AndroidManifest.xml:70:17-109
+101                android:value="com.google.firebase.components.ComponentRegistrar" />
+101-->[com.google.firebase:firebase-auth:22.0.0] /Users/hiephuynh/.gradle/caches/transforms-3/3945bd86f507ac8d8ae3b4b311acb205/transformed/firebase-auth-22.0.0/AndroidManifest.xml:71:17-82
+102            <meta-data
+102-->[com.google.firebase:firebase-installations:17.1.0] /Users/hiephuynh/.gradle/caches/transforms-3/32c8cd2ceffd1e56d42e8690429e8368/transformed/firebase-installations-17.1.0/AndroidManifest.xml:17:13-19:85
+103                android:name="com.google.firebase.components:com.google.firebase.installations.FirebaseInstallationsRegistrar"
+103-->[com.google.firebase:firebase-installations:17.1.0] /Users/hiephuynh/.gradle/caches/transforms-3/32c8cd2ceffd1e56d42e8690429e8368/transformed/firebase-installations-17.1.0/AndroidManifest.xml:18:17-127
+104                android:value="com.google.firebase.components.ComponentRegistrar" />
+104-->[com.google.firebase:firebase-installations:17.1.0] /Users/hiephuynh/.gradle/caches/transforms-3/32c8cd2ceffd1e56d42e8690429e8368/transformed/firebase-installations-17.1.0/AndroidManifest.xml:19:17-82
+105            <meta-data
+105-->[com.google.firebase:firebase-datatransport:18.1.7] /Users/hiephuynh/.gradle/caches/transforms-3/816cb06126ad0807932edae52cc03bb2/transformed/firebase-datatransport-18.1.7/AndroidManifest.xml:27:13-29:85
+106                android:name="com.google.firebase.components:com.google.firebase.datatransport.TransportRegistrar"
+106-->[com.google.firebase:firebase-datatransport:18.1.7] /Users/hiephuynh/.gradle/caches/transforms-3/816cb06126ad0807932edae52cc03bb2/transformed/firebase-datatransport-18.1.7/AndroidManifest.xml:28:17-115
+107                android:value="com.google.firebase.components.ComponentRegistrar" />
+107-->[com.google.firebase:firebase-datatransport:18.1.7] /Users/hiephuynh/.gradle/caches/transforms-3/816cb06126ad0807932edae52cc03bb2/transformed/firebase-datatransport-18.1.7/AndroidManifest.xml:29:17-82
+108        </service>
+109
+110        <activity
+110-->[com.google.firebase:firebase-auth:22.0.0] /Users/hiephuynh/.gradle/caches/transforms-3/3945bd86f507ac8d8ae3b4b311acb205/transformed/firebase-auth-22.0.0/AndroidManifest.xml:29:9-46:20
+111            android:name="com.google.firebase.auth.internal.GenericIdpActivity"
+111-->[com.google.firebase:firebase-auth:22.0.0] /Users/hiephuynh/.gradle/caches/transforms-3/3945bd86f507ac8d8ae3b4b311acb205/transformed/firebase-auth-22.0.0/AndroidManifest.xml:30:13-80
+112            android:excludeFromRecents="true"
+112-->[com.google.firebase:firebase-auth:22.0.0] /Users/hiephuynh/.gradle/caches/transforms-3/3945bd86f507ac8d8ae3b4b311acb205/transformed/firebase-auth-22.0.0/AndroidManifest.xml:31:13-46
+113            android:exported="true"
+113-->[com.google.firebase:firebase-auth:22.0.0] /Users/hiephuynh/.gradle/caches/transforms-3/3945bd86f507ac8d8ae3b4b311acb205/transformed/firebase-auth-22.0.0/AndroidManifest.xml:32:13-36
+114            android:launchMode="singleTask"
+114-->[com.google.firebase:firebase-auth:22.0.0] /Users/hiephuynh/.gradle/caches/transforms-3/3945bd86f507ac8d8ae3b4b311acb205/transformed/firebase-auth-22.0.0/AndroidManifest.xml:33:13-44
+115            android:theme="@android:style/Theme.Translucent.NoTitleBar" >
+115-->[com.google.firebase:firebase-auth:22.0.0] /Users/hiephuynh/.gradle/caches/transforms-3/3945bd86f507ac8d8ae3b4b311acb205/transformed/firebase-auth-22.0.0/AndroidManifest.xml:34:13-72
+116            <intent-filter>
+116-->[com.google.firebase:firebase-auth:22.0.0] /Users/hiephuynh/.gradle/caches/transforms-3/3945bd86f507ac8d8ae3b4b311acb205/transformed/firebase-auth-22.0.0/AndroidManifest.xml:35:13-45:29
+117                <action android:name="android.intent.action.VIEW" />
+117-->[com.google.firebase:firebase-auth:22.0.0] /Users/hiephuynh/.gradle/caches/transforms-3/3945bd86f507ac8d8ae3b4b311acb205/transformed/firebase-auth-22.0.0/AndroidManifest.xml:36:17-69
+117-->[com.google.firebase:firebase-auth:22.0.0] /Users/hiephuynh/.gradle/caches/transforms-3/3945bd86f507ac8d8ae3b4b311acb205/transformed/firebase-auth-22.0.0/AndroidManifest.xml:36:25-66
+118
+119                <category android:name="android.intent.category.DEFAULT" />
+119-->[com.google.firebase:firebase-auth:22.0.0] /Users/hiephuynh/.gradle/caches/transforms-3/3945bd86f507ac8d8ae3b4b311acb205/transformed/firebase-auth-22.0.0/AndroidManifest.xml:38:17-76
+119-->[com.google.firebase:firebase-auth:22.0.0] /Users/hiephuynh/.gradle/caches/transforms-3/3945bd86f507ac8d8ae3b4b311acb205/transformed/firebase-auth-22.0.0/AndroidManifest.xml:38:27-73
+120                <category android:name="android.intent.category.BROWSABLE" />
+120-->[com.google.firebase:firebase-auth:22.0.0] /Users/hiephuynh/.gradle/caches/transforms-3/3945bd86f507ac8d8ae3b4b311acb205/transformed/firebase-auth-22.0.0/AndroidManifest.xml:39:17-78
+120-->[com.google.firebase:firebase-auth:22.0.0] /Users/hiephuynh/.gradle/caches/transforms-3/3945bd86f507ac8d8ae3b4b311acb205/transformed/firebase-auth-22.0.0/AndroidManifest.xml:39:27-75
+121
+122                <data
+122-->[com.google.firebase:firebase-auth:22.0.0] /Users/hiephuynh/.gradle/caches/transforms-3/3945bd86f507ac8d8ae3b4b311acb205/transformed/firebase-auth-22.0.0/AndroidManifest.xml:41:17-44:51
+123                    android:host="firebase.auth"
+123-->[com.google.firebase:firebase-auth:22.0.0] /Users/hiephuynh/.gradle/caches/transforms-3/3945bd86f507ac8d8ae3b4b311acb205/transformed/firebase-auth-22.0.0/AndroidManifest.xml:42:21-49
+124                    android:path="/"
+124-->[com.google.firebase:firebase-auth:22.0.0] /Users/hiephuynh/.gradle/caches/transforms-3/3945bd86f507ac8d8ae3b4b311acb205/transformed/firebase-auth-22.0.0/AndroidManifest.xml:43:21-37
+125                    android:scheme="genericidp" />
+125-->[com.google.firebase:firebase-auth:22.0.0] /Users/hiephuynh/.gradle/caches/transforms-3/3945bd86f507ac8d8ae3b4b311acb205/transformed/firebase-auth-22.0.0/AndroidManifest.xml:44:21-48
+126            </intent-filter>
+127        </activity>
+128        <activity
+128-->[com.google.firebase:firebase-auth:22.0.0] /Users/hiephuynh/.gradle/caches/transforms-3/3945bd86f507ac8d8ae3b4b311acb205/transformed/firebase-auth-22.0.0/AndroidManifest.xml:47:9-64:20
+129            android:name="com.google.firebase.auth.internal.RecaptchaActivity"
+129-->[com.google.firebase:firebase-auth:22.0.0] /Users/hiephuynh/.gradle/caches/transforms-3/3945bd86f507ac8d8ae3b4b311acb205/transformed/firebase-auth-22.0.0/AndroidManifest.xml:48:13-79
+130            android:excludeFromRecents="true"
+130-->[com.google.firebase:firebase-auth:22.0.0] /Users/hiephuynh/.gradle/caches/transforms-3/3945bd86f507ac8d8ae3b4b311acb205/transformed/firebase-auth-22.0.0/AndroidManifest.xml:49:13-46
+131            android:exported="true"
+131-->[com.google.firebase:firebase-auth:22.0.0] /Users/hiephuynh/.gradle/caches/transforms-3/3945bd86f507ac8d8ae3b4b311acb205/transformed/firebase-auth-22.0.0/AndroidManifest.xml:50:13-36
+132            android:launchMode="singleTask"
+132-->[com.google.firebase:firebase-auth:22.0.0] /Users/hiephuynh/.gradle/caches/transforms-3/3945bd86f507ac8d8ae3b4b311acb205/transformed/firebase-auth-22.0.0/AndroidManifest.xml:51:13-44
+133            android:theme="@android:style/Theme.Translucent.NoTitleBar" >
+133-->[com.google.firebase:firebase-auth:22.0.0] /Users/hiephuynh/.gradle/caches/transforms-3/3945bd86f507ac8d8ae3b4b311acb205/transformed/firebase-auth-22.0.0/AndroidManifest.xml:52:13-72
+134            <intent-filter>
+134-->[com.google.firebase:firebase-auth:22.0.0] /Users/hiephuynh/.gradle/caches/transforms-3/3945bd86f507ac8d8ae3b4b311acb205/transformed/firebase-auth-22.0.0/AndroidManifest.xml:53:13-63:29
+135                <action android:name="android.intent.action.VIEW" />
+135-->[com.google.firebase:firebase-auth:22.0.0] /Users/hiephuynh/.gradle/caches/transforms-3/3945bd86f507ac8d8ae3b4b311acb205/transformed/firebase-auth-22.0.0/AndroidManifest.xml:36:17-69
+135-->[com.google.firebase:firebase-auth:22.0.0] /Users/hiephuynh/.gradle/caches/transforms-3/3945bd86f507ac8d8ae3b4b311acb205/transformed/firebase-auth-22.0.0/AndroidManifest.xml:36:25-66
+136
+137                <category android:name="android.intent.category.DEFAULT" />
+137-->[com.google.firebase:firebase-auth:22.0.0] /Users/hiephuynh/.gradle/caches/transforms-3/3945bd86f507ac8d8ae3b4b311acb205/transformed/firebase-auth-22.0.0/AndroidManifest.xml:38:17-76
+137-->[com.google.firebase:firebase-auth:22.0.0] /Users/hiephuynh/.gradle/caches/transforms-3/3945bd86f507ac8d8ae3b4b311acb205/transformed/firebase-auth-22.0.0/AndroidManifest.xml:38:27-73
+138                <category android:name="android.intent.category.BROWSABLE" />
+138-->[com.google.firebase:firebase-auth:22.0.0] /Users/hiephuynh/.gradle/caches/transforms-3/3945bd86f507ac8d8ae3b4b311acb205/transformed/firebase-auth-22.0.0/AndroidManifest.xml:39:17-78
+138-->[com.google.firebase:firebase-auth:22.0.0] /Users/hiephuynh/.gradle/caches/transforms-3/3945bd86f507ac8d8ae3b4b311acb205/transformed/firebase-auth-22.0.0/AndroidManifest.xml:39:27-75
+139
+140                <data
+140-->[com.google.firebase:firebase-auth:22.0.0] /Users/hiephuynh/.gradle/caches/transforms-3/3945bd86f507ac8d8ae3b4b311acb205/transformed/firebase-auth-22.0.0/AndroidManifest.xml:41:17-44:51
+141                    android:host="firebase.auth"
+141-->[com.google.firebase:firebase-auth:22.0.0] /Users/hiephuynh/.gradle/caches/transforms-3/3945bd86f507ac8d8ae3b4b311acb205/transformed/firebase-auth-22.0.0/AndroidManifest.xml:42:21-49
+142                    android:path="/"
+142-->[com.google.firebase:firebase-auth:22.0.0] /Users/hiephuynh/.gradle/caches/transforms-3/3945bd86f507ac8d8ae3b4b311acb205/transformed/firebase-auth-22.0.0/AndroidManifest.xml:43:21-37
+143                    android:scheme="recaptcha" />
+143-->[com.google.firebase:firebase-auth:22.0.0] /Users/hiephuynh/.gradle/caches/transforms-3/3945bd86f507ac8d8ae3b4b311acb205/transformed/firebase-auth-22.0.0/AndroidManifest.xml:44:21-48
+144            </intent-filter>
+145        </activity>
+146        <activity
+146-->[com.google.android.gms:play-services-auth:20.6.0] /Users/hiephuynh/.gradle/caches/transforms-3/b460faef6a07848da150fa45bcb81eba/transformed/play-services-auth-20.6.0/AndroidManifest.xml:23:9-27:75
+147            android:name="com.google.android.gms.auth.api.signin.internal.SignInHubActivity"
+147-->[com.google.android.gms:play-services-auth:20.6.0] /Users/hiephuynh/.gradle/caches/transforms-3/b460faef6a07848da150fa45bcb81eba/transformed/play-services-auth-20.6.0/AndroidManifest.xml:24:13-93
+148            android:excludeFromRecents="true"
+148-->[com.google.android.gms:play-services-auth:20.6.0] /Users/hiephuynh/.gradle/caches/transforms-3/b460faef6a07848da150fa45bcb81eba/transformed/play-services-auth-20.6.0/AndroidManifest.xml:25:13-46
+149            android:exported="false"
+149-->[com.google.android.gms:play-services-auth:20.6.0] /Users/hiephuynh/.gradle/caches/transforms-3/b460faef6a07848da150fa45bcb81eba/transformed/play-services-auth-20.6.0/AndroidManifest.xml:26:13-37
+150            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+150-->[com.google.android.gms:play-services-auth:20.6.0] /Users/hiephuynh/.gradle/caches/transforms-3/b460faef6a07848da150fa45bcb81eba/transformed/play-services-auth-20.6.0/AndroidManifest.xml:27:13-72
+151        <!--
+152            Service handling Google Sign-In user revocation. For apps that do not integrate with
+153            Google Sign-In, this service will never be started.
+154        -->
+155        <service
+155-->[com.google.android.gms:play-services-auth:20.6.0] /Users/hiephuynh/.gradle/caches/transforms-3/b460faef6a07848da150fa45bcb81eba/transformed/play-services-auth-20.6.0/AndroidManifest.xml:33:9-37:51
+156            android:name="com.google.android.gms.auth.api.signin.RevocationBoundService"
+156-->[com.google.android.gms:play-services-auth:20.6.0] /Users/hiephuynh/.gradle/caches/transforms-3/b460faef6a07848da150fa45bcb81eba/transformed/play-services-auth-20.6.0/AndroidManifest.xml:34:13-89
+157            android:exported="true"
+157-->[com.google.android.gms:play-services-auth:20.6.0] /Users/hiephuynh/.gradle/caches/transforms-3/b460faef6a07848da150fa45bcb81eba/transformed/play-services-auth-20.6.0/AndroidManifest.xml:35:13-36
+158            android:permission="com.google.android.gms.auth.api.signin.permission.REVOCATION_NOTIFICATION"
+158-->[com.google.android.gms:play-services-auth:20.6.0] /Users/hiephuynh/.gradle/caches/transforms-3/b460faef6a07848da150fa45bcb81eba/transformed/play-services-auth-20.6.0/AndroidManifest.xml:36:13-107
+159            android:visibleToInstantApps="true" />
+159-->[com.google.android.gms:play-services-auth:20.6.0] /Users/hiephuynh/.gradle/caches/transforms-3/b460faef6a07848da150fa45bcb81eba/transformed/play-services-auth-20.6.0/AndroidManifest.xml:37:13-48
+160
+161        <activity
+161-->[com.google.android.gms:play-services-base:18.0.1] /Users/hiephuynh/.gradle/caches/transforms-3/a1013e75b0b6bcbca37629777a3bd7c4/transformed/play-services-base-18.0.1/AndroidManifest.xml:20:9-22:45
+162            android:name="com.google.android.gms.common.api.GoogleApiActivity"
+162-->[com.google.android.gms:play-services-base:18.0.1] /Users/hiephuynh/.gradle/caches/transforms-3/a1013e75b0b6bcbca37629777a3bd7c4/transformed/play-services-base-18.0.1/AndroidManifest.xml:20:19-85
+163            android:exported="false"
+163-->[com.google.android.gms:play-services-base:18.0.1] /Users/hiephuynh/.gradle/caches/transforms-3/a1013e75b0b6bcbca37629777a3bd7c4/transformed/play-services-base-18.0.1/AndroidManifest.xml:22:19-43
+164            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+164-->[com.google.android.gms:play-services-base:18.0.1] /Users/hiephuynh/.gradle/caches/transforms-3/a1013e75b0b6bcbca37629777a3bd7c4/transformed/play-services-base-18.0.1/AndroidManifest.xml:21:19-78
+165
+166        <provider
+166-->[com.google.firebase:firebase-common:20.3.2] /Users/hiephuynh/.gradle/caches/transforms-3/5de653b77a2a71698f5640771a4e191a/transformed/firebase-common-20.3.2/AndroidManifest.xml:25:9-30:39
+167            android:name="com.google.firebase.provider.FirebaseInitProvider"
+167-->[com.google.firebase:firebase-common:20.3.2] /Users/hiephuynh/.gradle/caches/transforms-3/5de653b77a2a71698f5640771a4e191a/transformed/firebase-common-20.3.2/AndroidManifest.xml:26:13-77
+168            android:authorities="com.example.chatapp.firebaseinitprovider"
+168-->[com.google.firebase:firebase-common:20.3.2] /Users/hiephuynh/.gradle/caches/transforms-3/5de653b77a2a71698f5640771a4e191a/transformed/firebase-common-20.3.2/AndroidManifest.xml:27:13-72
+169            android:directBootAware="true"
+169-->[com.google.firebase:firebase-common:20.3.2] /Users/hiephuynh/.gradle/caches/transforms-3/5de653b77a2a71698f5640771a4e191a/transformed/firebase-common-20.3.2/AndroidManifest.xml:28:13-43
+170            android:exported="false"
+170-->[com.google.firebase:firebase-common:20.3.2] /Users/hiephuynh/.gradle/caches/transforms-3/5de653b77a2a71698f5640771a4e191a/transformed/firebase-common-20.3.2/AndroidManifest.xml:29:13-37
+171            android:initOrder="100" />
+171-->[com.google.firebase:firebase-common:20.3.2] /Users/hiephuynh/.gradle/caches/transforms-3/5de653b77a2a71698f5640771a4e191a/transformed/firebase-common-20.3.2/AndroidManifest.xml:30:13-36
+172
+173        <meta-data
+173-->[com.google.android.gms:play-services-basement:18.2.0] /Users/hiephuynh/.gradle/caches/transforms-3/36330d83064318bf963c81c4526dbdc9/transformed/play-services-basement-18.2.0/AndroidManifest.xml:21:9-23:69
+174            android:name="com.google.android.gms.version"
+174-->[com.google.android.gms:play-services-basement:18.2.0] /Users/hiephuynh/.gradle/caches/transforms-3/36330d83064318bf963c81c4526dbdc9/transformed/play-services-basement-18.2.0/AndroidManifest.xml:22:13-58
+175            android:value="@integer/google_play_services_version" />
+175-->[com.google.android.gms:play-services-basement:18.2.0] /Users/hiephuynh/.gradle/caches/transforms-3/36330d83064318bf963c81c4526dbdc9/transformed/play-services-basement-18.2.0/AndroidManifest.xml:23:13-66
+176
+177        <provider
+177-->[androidx.emoji2:emoji2:1.2.0] /Users/hiephuynh/.gradle/caches/transforms-3/07605d7cb7c966e4c7d74a471b43cf00/transformed/emoji2-1.2.0/AndroidManifest.xml:24:9-32:20
+178            android:name="androidx.startup.InitializationProvider"
+178-->[androidx.emoji2:emoji2:1.2.0] /Users/hiephuynh/.gradle/caches/transforms-3/07605d7cb7c966e4c7d74a471b43cf00/transformed/emoji2-1.2.0/AndroidManifest.xml:25:13-67
+179            android:authorities="com.example.chatapp.androidx-startup"
+179-->[androidx.emoji2:emoji2:1.2.0] /Users/hiephuynh/.gradle/caches/transforms-3/07605d7cb7c966e4c7d74a471b43cf00/transformed/emoji2-1.2.0/AndroidManifest.xml:26:13-68
+180            android:exported="false" >
+180-->[androidx.emoji2:emoji2:1.2.0] /Users/hiephuynh/.gradle/caches/transforms-3/07605d7cb7c966e4c7d74a471b43cf00/transformed/emoji2-1.2.0/AndroidManifest.xml:27:13-37
+181            <meta-data
+181-->[androidx.emoji2:emoji2:1.2.0] /Users/hiephuynh/.gradle/caches/transforms-3/07605d7cb7c966e4c7d74a471b43cf00/transformed/emoji2-1.2.0/AndroidManifest.xml:29:13-31:52
+182                android:name="androidx.emoji2.text.EmojiCompatInitializer"
+182-->[androidx.emoji2:emoji2:1.2.0] /Users/hiephuynh/.gradle/caches/transforms-3/07605d7cb7c966e4c7d74a471b43cf00/transformed/emoji2-1.2.0/AndroidManifest.xml:30:17-75
+183                android:value="androidx.startup" />
+183-->[androidx.emoji2:emoji2:1.2.0] /Users/hiephuynh/.gradle/caches/transforms-3/07605d7cb7c966e4c7d74a471b43cf00/transformed/emoji2-1.2.0/AndroidManifest.xml:31:17-49
+184            <meta-data
+184-->[androidx.lifecycle:lifecycle-process:2.4.1] /Users/hiephuynh/.gradle/caches/transforms-3/8e74d2dcc162b35b0f71b07f40098527/transformed/lifecycle-process-2.4.1/AndroidManifest.xml:31:13-33:52
+185                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
+185-->[androidx.lifecycle:lifecycle-process:2.4.1] /Users/hiephuynh/.gradle/caches/transforms-3/8e74d2dcc162b35b0f71b07f40098527/transformed/lifecycle-process-2.4.1/AndroidManifest.xml:32:17-78
+186                android:value="androidx.startup" />
+186-->[androidx.lifecycle:lifecycle-process:2.4.1] /Users/hiephuynh/.gradle/caches/transforms-3/8e74d2dcc162b35b0f71b07f40098527/transformed/lifecycle-process-2.4.1/AndroidManifest.xml:33:17-49
+187        </provider>
+188
+189        <service
+189-->[com.google.android.datatransport:transport-backend-cct:3.1.8] /Users/hiephuynh/.gradle/caches/transforms-3/82813e5d635e31bad362378028bce108/transformed/transport-backend-cct-3.1.8/AndroidManifest.xml:28:9-34:19
+190            android:name="com.google.android.datatransport.runtime.backends.TransportBackendDiscovery"
+190-->[com.google.android.datatransport:transport-backend-cct:3.1.8] /Users/hiephuynh/.gradle/caches/transforms-3/82813e5d635e31bad362378028bce108/transformed/transport-backend-cct-3.1.8/AndroidManifest.xml:29:13-103
+191            android:exported="false" >
+191-->[com.google.android.datatransport:transport-backend-cct:3.1.8] /Users/hiephuynh/.gradle/caches/transforms-3/82813e5d635e31bad362378028bce108/transformed/transport-backend-cct-3.1.8/AndroidManifest.xml:30:13-37
+192            <meta-data
+192-->[com.google.android.datatransport:transport-backend-cct:3.1.8] /Users/hiephuynh/.gradle/caches/transforms-3/82813e5d635e31bad362378028bce108/transformed/transport-backend-cct-3.1.8/AndroidManifest.xml:31:13-33:39
+193                android:name="backend:com.google.android.datatransport.cct.CctBackendFactory"
+193-->[com.google.android.datatransport:transport-backend-cct:3.1.8] /Users/hiephuynh/.gradle/caches/transforms-3/82813e5d635e31bad362378028bce108/transformed/transport-backend-cct-3.1.8/AndroidManifest.xml:32:17-94
+194                android:value="cct" />
+194-->[com.google.android.datatransport:transport-backend-cct:3.1.8] /Users/hiephuynh/.gradle/caches/transforms-3/82813e5d635e31bad362378028bce108/transformed/transport-backend-cct-3.1.8/AndroidManifest.xml:33:17-36
+195        </service>
+196        <service
+196-->[com.google.android.datatransport:transport-runtime:3.1.8] /Users/hiephuynh/.gradle/caches/transforms-3/66de5743e5203eaa403b0358f5b3584c/transformed/transport-runtime-3.1.8/AndroidManifest.xml:26:9-30:19
+197            android:name="com.google.android.datatransport.runtime.scheduling.jobscheduling.JobInfoSchedulerService"
+197-->[com.google.android.datatransport:transport-runtime:3.1.8] /Users/hiephuynh/.gradle/caches/transforms-3/66de5743e5203eaa403b0358f5b3584c/transformed/transport-runtime-3.1.8/AndroidManifest.xml:27:13-117
+198            android:exported="false"
+198-->[com.google.android.datatransport:transport-runtime:3.1.8] /Users/hiephuynh/.gradle/caches/transforms-3/66de5743e5203eaa403b0358f5b3584c/transformed/transport-runtime-3.1.8/AndroidManifest.xml:28:13-37
+199            android:permission="android.permission.BIND_JOB_SERVICE" >
+199-->[com.google.android.datatransport:transport-runtime:3.1.8] /Users/hiephuynh/.gradle/caches/transforms-3/66de5743e5203eaa403b0358f5b3584c/transformed/transport-runtime-3.1.8/AndroidManifest.xml:29:13-69
+200        </service>
+201
+202        <receiver
+202-->[com.google.android.datatransport:transport-runtime:3.1.8] /Users/hiephuynh/.gradle/caches/transforms-3/66de5743e5203eaa403b0358f5b3584c/transformed/transport-runtime-3.1.8/AndroidManifest.xml:32:9-34:40
+203            android:name="com.google.android.datatransport.runtime.scheduling.jobscheduling.AlarmManagerSchedulerBroadcastReceiver"
+203-->[com.google.android.datatransport:transport-runtime:3.1.8] /Users/hiephuynh/.gradle/caches/transforms-3/66de5743e5203eaa403b0358f5b3584c/transformed/transport-runtime-3.1.8/AndroidManifest.xml:33:13-132
+204            android:exported="false" />
+204-->[com.google.android.datatransport:transport-runtime:3.1.8] /Users/hiephuynh/.gradle/caches/transforms-3/66de5743e5203eaa403b0358f5b3584c/transformed/transport-runtime-3.1.8/AndroidManifest.xml:34:13-37
+205    </application>
+206
+207</manifest>

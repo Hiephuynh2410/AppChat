@@ -141,19 +141,29 @@ public class MainActivity extends BaseActivity  implements ConversionListener {
     }
 
     private void SignOut() {
-        showToast("signing out...");
-        FirebaseFirestore db = FirebaseFirestore.getInstance();//được sử dụng để khởi tạo một đối tượng FirebaseFirestore để có thể sử dụng các phương thức và chức năng của Firestore.
-        DocumentReference documentReference = db.collection(constant.KEY_COLLECTION_USERS).document(
-            preferenceManager.getString(constant.KEY_USER_ID)//truy cập vào bộ sưu tập người dùng trong Firestore. Sau đó, trả về ID của người dùng đã đăng nhập.
-        );
-        HashMap<String, Object> updates = new HashMap<>();
-        updates.put(constant.KEY_FCM_TOKEN, FieldValue.delete());
-        documentReference.update(updates).addOnSuccessListener(unused -> {
-            preferenceManager.clear();
-            startActivity(new Intent(getApplicationContext(), SignInActivity.class));
-            finish();
-        })
-            .addOnFailureListener(e -> showToast("unable to sign out"));
+        showToast("Signing out...");
+
+        // Xóa token FCM từ Firestore
+        String userId = preferenceManager.getString(constant.KEY_USER_ID);
+        if (userId != null && !userId.isEmpty()) {
+            FirebaseFirestore db = FirebaseFirestore.getInstance();
+            DocumentReference documentReference = db.collection(constant.KEY_COLLECTION_USERS).document(userId);
+
+            HashMap<String, Object> updates = new HashMap<>();
+            updates.put(constant.KEY_FCM_TOKEN, FieldValue.delete());
+
+            documentReference.update(updates)
+                    .addOnSuccessListener(unused -> {
+                        // Xóa thông tin người dùng khỏi SharedPreferences
+                        preferenceManager.clear();
+                        // Chuyển đến màn hình đăng nhập (SignInActivity)
+                        startActivity(new Intent(getApplicationContext(), SignInActivity.class));
+                        finish();
+                    })
+                    .addOnFailureListener(e -> showToast("Unable to sign out. Please try again."));
+        } else {
+            showToast("User ID is null or empty. Unable to sign out.");
+        }
     }
 
     @Override

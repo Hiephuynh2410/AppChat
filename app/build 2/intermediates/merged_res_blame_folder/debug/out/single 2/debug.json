@@ -1,0 +1,174 @@
+[
+    {
+        "merged": "com.example.chatapp-merged_res-39:/drawable_outline_info_24.xml.flat",
+        "source": "com.example.chatapp-main-41:/drawable/outline_info_24.xml"
+    },
+    {
+        "merged": "com.example.chatapp-merged_res-39:/layout_item_container_user.xml.flat",
+        "source": "com.example.chatapp-main-41:/layout/item_container_user.xml"
+    },
+    {
+        "merged": "com.example.chatapp-merged_res-39:/drawable_round_arrow_back_ios_24.xml.flat",
+        "source": "com.example.chatapp-main-41:/drawable/round_arrow_back_ios_24.xml"
+    },
+    {
+        "merged": "com.example.chatapp-merged_res-39:/drawable_google.png.flat",
+        "source": "com.example.chatapp-main-41:/drawable/google.png"
+    },
+    {
+        "merged": "com.example.chatapp-merged_res-39:/drawable_round_power_settings_new_24.xml.flat",
+        "source": "com.example.chatapp-main-41:/drawable/round_power_settings_new_24.xml"
+    },
+    {
+        "merged": "com.example.chatapp-merged_res-39:/drawable_ic_launcher_background.xml.flat",
+        "source": "com.example.chatapp-main-41:/drawable/ic_launcher_background.xml"
+    },
+    {
+        "merged": "com.example.chatapp-merged_res-39:/drawable_background_icon.xml.flat",
+        "source": "com.example.chatapp-main-41:/drawable/background_icon.xml"
+    },
+    {
+        "merged": "com.example.chatapp-merged_res-39:/mipmap-xhdpi_ic_launcher.webp.flat",
+        "source": "com.example.chatapp-main-41:/mipmap-xhdpi/ic_launcher.webp"
+    },
+    {
+        "merged": "com.example.chatapp-merged_res-39:/xml_data_extraction_rules.xml.flat",
+        "source": "com.example.chatapp-main-41:/xml/data_extraction_rules.xml"
+    },
+    {
+        "merged": "com.example.chatapp-merged_res-39:/xml_backup_rules.xml.flat",
+        "source": "com.example.chatapp-main-41:/xml/backup_rules.xml"
+    },
+    {
+        "merged": "com.example.chatapp-merged_res-39:/drawable_background_image.xml.flat",
+        "source": "com.example.chatapp-main-41:/drawable/background_image.xml"
+    },
+    {
+        "merged": "com.example.chatapp-merged_res-39:/mipmap-xhdpi_ic_launcher_round.webp.flat",
+        "source": "com.example.chatapp-main-41:/mipmap-xhdpi/ic_launcher_round.webp"
+    },
+    {
+        "merged": "com.example.chatapp-merged_res-39:/drawable_round_add_24.xml.flat",
+        "source": "com.example.chatapp-main-41:/drawable/round_add_24.xml"
+    },
+    {
+        "merged": "com.example.chatapp-merged_res-39:/mipmap-mdpi_ic_launcher_round.webp.flat",
+        "source": "com.example.chatapp-main-41:/mipmap-mdpi/ic_launcher_round.webp"
+    },
+    {
+        "merged": "com.example.chatapp-merged_res-39:/layout_activity_main.xml.flat",
+        "source": "com.example.chatapp-main-41:/layout/activity_main.xml"
+    },
+    {
+        "merged": "com.example.chatapp-merged_res-39:/mipmap-xxhdpi_ic_launcher_round.webp.flat",
+        "source": "com.example.chatapp-main-41:/mipmap-xxhdpi/ic_launcher_round.webp"
+    },
+    {
+        "merged": "com.example.chatapp-merged_res-39:/layout_activity_user.xml.flat",
+        "source": "com.example.chatapp-main-41:/layout/activity_user.xml"
+    },
+    {
+        "merged": "com.example.chatapp-merged_res-39:/drawable_bg_sent_mess.xml.flat",
+        "source": "com.example.chatapp-main-41:/drawable/bg_sent_mess.xml"
+    },
+    {
+        "merged": "com.example.chatapp-merged_res-39:/mipmap-anydpi-v26_ic_launcher.xml.flat",
+        "source": "com.example.chatapp-main-41:/mipmap-anydpi-v26/ic_launcher.xml"
+    },
+    {
+        "merged": "com.example.chatapp-merged_res-39:/drawable_bg_content_bottom.xml.flat",
+        "source": "com.example.chatapp-main-41:/drawable/bg_content_bottom.xml"
+    },
+    {
+        "merged": "com.example.chatapp-merged_res-39:/mipmap-hdpi_ic_launcher.webp.flat",
+        "source": "com.example.chatapp-main-41:/mipmap-hdpi/ic_launcher.webp"
+    },
+    {
+        "merged": "com.example.chatapp-merged_res-39:/layout_item_container_recent.xml.flat",
+        "source": "com.example.chatapp-main-41:/layout/item_container_recent.xml"
+    },
+    {
+        "merged": "com.example.chatapp-merged_res-39:/layout_item_container_received_mess.xml.flat",
+        "source": "com.example.chatapp-main-41:/layout/item_container_received_mess.xml"
+    },
+    {
+        "merged": "com.example.chatapp-merged_res-39:/drawable-v24_ic_launcher_foreground.xml.flat",
+        "source": "com.example.chatapp-main-41:/drawable-v24/ic_launcher_foreground.xml"
+    },
+    {
+        "merged": "com.example.chatapp-merged_res-39:/drawable_bg_chat_input.xml.flat",
+        "source": "com.example.chatapp-main-41:/drawable/bg_chat_input.xml"
+    },
+    {
+        "merged": "com.example.chatapp-merged_res-39:/mipmap-anydpi-v26_ic_launcher_round.xml.flat",
+        "source": "com.example.chatapp-main-41:/mipmap-anydpi-v26/ic_launcher_round.xml"
+    },
+    {
+        "merged": "com.example.chatapp-merged_res-39:/layout_item_container_sent_mess.xml.flat",
+        "source": "com.example.chatapp-main-41:/layout/item_container_sent_mess.xml"
+    },
+    {
+        "merged": "com.example.chatapp-merged_res-39:/drawable_bg_content_top.xml.flat",
+        "source": "com.example.chatapp-main-41:/drawable/bg_content_top.xml"
+    },
+    {
+        "merged": "com.example.chatapp-merged_res-39:/mipmap-hdpi_ic_launcher_round.webp.flat",
+        "source": "com.example.chatapp-main-41:/mipmap-hdpi/ic_launcher_round.webp"
+    },
+    {
+        "merged": "com.example.chatapp-merged_res-39:/mipmap-mdpi_ic_launcher.webp.flat",
+        "source": "com.example.chatapp-main-41:/mipmap-mdpi/ic_launcher.webp"
+    },
+    {
+        "merged": "com.example.chatapp-merged_res-39:/layout_dialog_otp.xml.flat",
+        "source": "com.example.chatapp-main-41:/layout/dialog_otp.xml"
+    },
+    {
+        "merged": "com.example.chatapp-merged_res-39:/layout_activity_otp.xml.flat",
+        "source": "com.example.chatapp-main-41:/layout/activity_otp.xml"
+    },
+    {
+        "merged": "com.example.chatapp-merged_res-39:/drawable_round_send_24.xml.flat",
+        "source": "com.example.chatapp-main-41:/drawable/round_send_24.xml"
+    },
+    {
+        "merged": "com.example.chatapp-merged_res-39:/mipmap-xxhdpi_ic_launcher.webp.flat",
+        "source": "com.example.chatapp-main-41:/mipmap-xxhdpi/ic_launcher.webp"
+    },
+    {
+        "merged": "com.example.chatapp-merged_res-39:/layout_activity_sign_up.xml.flat",
+        "source": "com.example.chatapp-main-41:/layout/activity_sign_up.xml"
+    },
+    {
+        "merged": "com.example.chatapp-merged_res-39:/drawable_background_input.xml.flat",
+        "source": "com.example.chatapp-main-41:/drawable/background_input.xml"
+    },
+    {
+        "merged": "com.example.chatapp-merged_res-39:/drawable_round_notifications_24.xml.flat",
+        "source": "com.example.chatapp-main-41:/drawable/round_notifications_24.xml"
+    },
+    {
+        "merged": "com.example.chatapp-merged_res-39:/mipmap-xxxhdpi_ic_launcher.webp.flat",
+        "source": "com.example.chatapp-main-41:/mipmap-xxxhdpi/ic_launcher.webp"
+    },
+    {
+        "merged": "com.example.chatapp-merged_res-39:/layout_activity_chat.xml.flat",
+        "source": "com.example.chatapp-main-41:/layout/activity_chat.xml"
+    },
+    {
+        "merged": "com.example.chatapp-merged_res-39:/drawable_bg_received_mess.xml.flat",
+        "source": "com.example.chatapp-main-41:/drawable/bg_received_mess.xml"
+    },
+    {
+        "merged": "com.example.chatapp-merged_res-39:/layout_activity_sign_in.xml.flat",
+        "source": "com.example.chatapp-main-41:/layout/activity_sign_in.xml"
+    },
+    {
+        "merged": "com.example.chatapp-merged_res-39:/mipmap-xxxhdpi_ic_launcher_round.webp.flat",
+        "source": "com.example.chatapp-main-41:/mipmap-xxxhdpi/ic_launcher_round.webp"
+    },
+    {
+        "merged": "com.example.chatapp-merged_res-39:/drawable_placeholder_image.xml.flat",
+        "source": "com.example.chatapp-main-41:/drawable/placeholder_image.xml"
+    }
+]

@@ -73,9 +73,10 @@ public class OTP extends AppCompatActivity {
                     public void onCodeSent(@NonNull String s, @NonNull PhoneAuthProvider.ForceResendingToken forceResendingToken) {
                         verificationId = s;
 
-                        Intent intent = new Intent(OTP.this, dialog_otp.class);
+                        Intent intent = new Intent(OTP.this, MainActivity.class);
                         intent.putExtra("verificationId", verificationId);
                         startActivity(intent);
+                        finish();
                     }
                 }
         );

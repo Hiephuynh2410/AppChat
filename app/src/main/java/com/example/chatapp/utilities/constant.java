@@ -52,6 +52,5 @@ public class constant {
         return remoteMsgHeader;
     }
 
-
 }
 

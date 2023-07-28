@@ -10,6 +10,8 @@ import android.view.View;
 import android.widget.Toast;
 
 
+import androidx.annotation.Nullable;
+
 import com.example.chatapp.R;
 import com.example.chatapp.adapter.RecentConversationAdapter;
 import com.example.chatapp.databinding.ActivityMainBinding;
@@ -42,6 +44,7 @@ public class MainActivity extends BaseActivity  implements ConversionListener {
     private RecentConversationAdapter conversationAdapter;
     private FirebaseFirestore db;
     private RoundedImageView imgview;
+    private static final int REQUEST_CODE_EDIT_PROFILE = 100;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,7 +66,25 @@ public class MainActivity extends BaseActivity  implements ConversionListener {
             }
         });
     }
+    private void openProfileImageActivity() {
+        Intent intent = new Intent(MainActivity.this, profileImage.class);
+        startActivityForResult(intent, REQUEST_CODE_EDIT_PROFILE);
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_CODE_EDIT_PROFILE && resultCode == RESULT_OK) {
+            // Handle the updated data here
+            if (data != null) {
+                String updatedName = data.getStringExtra("name");
+                String updatedEmail = data.getStringExtra("email");
+                String updatedPhoneNumber = data.getStringExtra("phoneNumber");
 
+                // Update the UI with the updated data
+                binding.textName.setText(updatedName);
+            }
+        }
+    }
     private  void init() {
         conversation = new ArrayList<>();
         conversationAdapter = new RecentConversationAdapter(conversation, this);

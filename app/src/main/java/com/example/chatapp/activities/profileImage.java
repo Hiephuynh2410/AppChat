@@ -69,6 +69,9 @@ public class profileImage extends AppCompatActivity {
                             textPhoneNumber.setText(updatedPhoneNumber);
 
                             showToast("Profile updated successfully!");
+                            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                            startActivity(intent);
+                            finish();
                         })
                         .addOnFailureListener(e -> showToast("Failed to update profile."));
             }

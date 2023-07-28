@@ -108,24 +108,24 @@ public class SignInActivity extends AppCompatActivity {
 
     private void showPhoneNumberDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Enter Phone Number");
+//        builder.setTitle("Enter Phone Number");
         View view = getLayoutInflater().inflate(R.layout.activity_otp, null);
         EditText editTextPhoneNumber = view.findViewById(R.id.t1);
         builder.setView(view);
-        builder.setPositiveButton("Get OTP", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                String phoneNumber = editTextPhoneNumber.getText().toString().trim();
-                if (!TextUtils.isEmpty(phoneNumber)) {
-                    // Start OTP activity and pass the phone number
+//        builder.setPositiveButton("Get OTP", new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialog, int which) {
+//                String phoneNumber = editTextPhoneNumber.getText().toString().trim();
+//                if (!TextUtils.isEmpty(phoneNumber)) {
+//                    // Start OTP activity and pass the phone number
                     Intent intent = new Intent(SignInActivity.this, OTP.class);
-                    intent.putExtra("phoneNumber", phoneNumber);
+//                    intent.putExtra("phoneNumber", phoneNumber);
                     startActivity(intent);
-                } else {
-                    showToast("Please enter a valid phone number.");
-                }
-            }
-        });
+//                } else {
+//                    showToast("Please enter a valid phone number.");
+//                }
+//            }
+//        });
         builder.setNegativeButton("Cancel", null);
         AlertDialog phoneNumberDialog = builder.create();
         phoneNumberDialog.show();

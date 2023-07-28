@@ -54,11 +54,15 @@ public class SignInActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         dialog = new Dialog(SignInActivity.this);
         preferenceManager = new PreferenceManager(getApplicationContext());
+//// Reset the KEY_IS_SIGNED_IN flag to false every time the activity is created
+        preferenceManager.putBoolean(constant.KEY_IS_SIGNED_IN, false);
         if(preferenceManager.getBoolean(constant.KEY_IS_SIGNED_IN)) {
             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
             startActivity(intent);
             finish();
         }
+
+
         binding = ActivitySignInBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         setListeners();
@@ -84,7 +88,6 @@ public class SignInActivity extends AppCompatActivity {
     }
 
     private void checkCredentials() {
-        loading(true);
         FirebaseFirestore database = FirebaseFirestore.getInstance();
         database.collection(constant.KEY_COLLECTION_USERS)
                 .whereEqualTo(constant.KEY_EMAIL, binding.inputemail.getText().toString())
@@ -100,7 +103,6 @@ public class SignInActivity extends AppCompatActivity {
                         // Show dialog to enter phone number
                         showPhoneNumberDialog();
                     } else {
-                        loading(false);
                         showToast("Invalid credentials. Please try again.");
                     }
                 });

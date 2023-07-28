@@ -14,13 +14,17 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.chatapp.R;
+import com.example.chatapp.utilities.PreferenceManager;
+import com.example.chatapp.utilities.constant;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseException;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.concurrent.TimeUnit;
 
@@ -28,7 +32,7 @@ public class OTP extends AppCompatActivity {
 
     private EditText editTextPhoneNumber;
     private Button buttonGetOtp;
-
+    private PreferenceManager preferenceManager;
     private FirebaseAuth firebaseAuth;
     private String verificationId;
     @Override
@@ -40,7 +44,7 @@ public class OTP extends AppCompatActivity {
         buttonGetOtp = findViewById(R.id.b1);
 
         firebaseAuth = FirebaseAuth.getInstance();
-
+        preferenceManager = new PreferenceManager(getApplicationContext());
         buttonGetOtp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -105,6 +109,7 @@ public class OTP extends AppCompatActivity {
         AlertDialog otpDialog = builder.create();
         otpDialog.show();
     }
+
     private void verifyOTP(String otp) {
         PhoneAuthCredential credential = PhoneAuthProvider.getCredential(verificationId, otp);
         firebaseAuth.signInWithCredential(credential)
@@ -112,11 +117,14 @@ public class OTP extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
+                            // OTP verification successful, user is now signed in
+                            preferenceManager.putBoolean(constant.KEY_IS_SIGNED_IN, true); // Set the flag here
                             Intent intent = new Intent(OTP.this, MainActivity.class);
                             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                             startActivity(intent);
                             finish();
                         } else {
+                            // OTP verification failed
                             Toast.makeText(OTP.this, "Verification failed. Please enter a valid OTP.", Toast.LENGTH_SHORT).show();
                         }
                     }

@@ -12,4 +12,5 @@
     <string name="type_a_message">type a message</string>
     <string name="online">Online</string>
     <string name="search_hint">search Hint</string>
+    <string name="save">save</string>
 </resources>

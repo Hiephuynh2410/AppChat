@@ -8,7 +8,10 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Base64;
+import android.util.Log;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -25,7 +28,7 @@ public class profileImage extends AppCompatActivity {
     private TextView textUserName, textUserEmail,textPhoneNumber;
     private AppCompatImageView back;
     private PreferenceManager preferenceManager;
-
+    private EditText editTextName, editTextEmail, editTextPhoneNumber;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,6 +44,37 @@ public class profileImage extends AppCompatActivity {
             }
         });
 
+        Button btnSaveProfile = findViewById(R.id.btnSave);
+        btnSaveProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String updatedName = editTextName.getText().toString().trim();
+                String updatedEmail = editTextEmail.getText().toString().trim();
+                String updatedPhoneNumber = editTextPhoneNumber.getText().toString().trim();
+
+                // Update the user information in the Firestore document
+                String currentUserId = preferenceManager.getString(constant.KEY_USER_ID);
+                FirebaseFirestore database = FirebaseFirestore.getInstance();
+                database.collection(constant.KEY_COLLECTION_USERS)
+                        .document(currentUserId)
+                        .update(
+                                constant.KEY_NAME, updatedName,
+                                constant.KEY_EMAIL, updatedEmail,
+                                constant.KEY_PHONE, updatedPhoneNumber
+                        )
+                        .addOnSuccessListener(aVoid -> {
+                            // If the update is successful, update the displayed information as well
+                            textUserName.setText(updatedName);
+                            textUserEmail.setText(updatedEmail);
+                            textPhoneNumber.setText(updatedPhoneNumber);
+
+                            showToast("Profile updated successfully!");
+                        })
+                        .addOnFailureListener(e -> showToast("Failed to update profile."));
+            }
+        });
+
+
         preferenceManager = new PreferenceManager(getApplicationContext());
 
         // Initialize views
@@ -49,6 +83,9 @@ public class profileImage extends AppCompatActivity {
         textUserEmail = findViewById(R.id.textUserEmail);
         textPhoneNumber = findViewById(R.id.textPhoneNumber);
 
+         editTextName = findViewById(R.id.editName);
+         editTextEmail = findViewById(R.id.editEmailAddress);
+         editTextPhoneNumber = findViewById(R.id.editPhone);
         // Get the current user ID
         String currentUserId = preferenceManager.getString(constant.KEY_USER_ID);
 
@@ -64,22 +101,34 @@ public class profileImage extends AppCompatActivity {
                             // Retrieve user information from the document
                             String name = documentSnapshot.getString(constant.KEY_NAME);
                             String email = documentSnapshot.getString(constant.KEY_EMAIL);
-                            String imageBase64 = documentSnapshot.getString(constant.KEY_IMAGE);
                             String phoneNumber = documentSnapshot.getString(constant.KEY_PHONE); // Retrieve phone number
 
-                            // Display user information
+                            // Display user information in EditText fields
                             textUserName.setText(name);
                             textUserEmail.setText(email);
                             textPhoneNumber.setText(phoneNumber);
 
                             // Load profile image using Base64 decoding
+                            String imageBase64 = documentSnapshot.getString(constant.KEY_IMAGE);
                             byte[] decodedImageBytes = Base64.decode(imageBase64, Base64.DEFAULT);
                             Bitmap decodedImageBitmap = BitmapFactory.decodeByteArray(decodedImageBytes, 0, decodedImageBytes.length);
                             profileImage.setImageBitmap(decodedImageBitmap);
+
+                            // Display user information in EditText fields
+                            editTextName.setText(name);
+                            editTextEmail.setText(email);
+                            editTextPhoneNumber.setText(phoneNumber);
                         }
                     } else {
-
+                        showToast("User data not found.");
                     }
                 });
     }
+    private void showToast(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    }
+    private void saveProfileChanges() {
+        // Get updated information from the EditText fields
+    }
+
 }

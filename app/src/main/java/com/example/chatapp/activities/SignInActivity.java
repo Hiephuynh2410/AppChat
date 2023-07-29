@@ -54,8 +54,9 @@ public class SignInActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         dialog = new Dialog(SignInActivity.this);
         preferenceManager = new PreferenceManager(getApplicationContext());
+
 //// Reset the KEY_IS_SIGNED_IN flag to false every time the activity is created
-        preferenceManager.putBoolean(constant.KEY_IS_SIGNED_IN, false);
+     //   preferenceManager.putBoolean(constant.KEY_IS_SIGNED_IN, false);
         if(preferenceManager.getBoolean(constant.KEY_IS_SIGNED_IN)) {
             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
             startActivity(intent);
@@ -66,14 +67,14 @@ public class SignInActivity extends AppCompatActivity {
         binding = ActivitySignInBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         setListeners();
-        btnotp = findViewById(R.id.textOTP);
-        btnotp.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), OTP.class);
-                startActivity(intent);
-            }
-        });
+//        btnotp = findViewById(R.id.textOTP);
+//        btnotp.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent = new Intent(getApplicationContext(), OTP.class);
+//                startActivity(intent);
+//            }
+//        });
     }
 
     //////////////////////////////////
@@ -81,8 +82,8 @@ public class SignInActivity extends AppCompatActivity {
         binding.TextCreateNewaccount.setOnClickListener(v -> startActivity(new Intent(getApplicationContext(), SignUpActivity.class)));
         binding.buttonSignIn.setOnClickListener(v -> {
             if (isValidSignIn()) {
-                //SignIn();
-                checkCredentials();
+                SignIn();
+               // checkCredentials();
             }
         });
     }

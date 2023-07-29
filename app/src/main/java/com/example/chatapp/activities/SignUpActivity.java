@@ -3,9 +3,12 @@ package com.example.chatapp.activities;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContract;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -29,7 +32,12 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.FirebaseException;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.PhoneAuthCredential;
+import com.google.firebase.auth.PhoneAuthProvider;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -37,10 +45,13 @@ import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.HashMap;
+import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class SignUpActivity extends AppCompatActivity {
+    private String verificationId;
+    private FirebaseAuth firebaseAuth;
 
     private ActivitySignUpBinding binding;
     private PreferenceManager preferenceManager;
@@ -49,6 +60,7 @@ public class SignUpActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        firebaseAuth = FirebaseAuth.getInstance();
         binding = ActivitySignUpBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         preferenceManager = new PreferenceManager(getApplicationContext());
@@ -61,9 +73,12 @@ public class SignUpActivity extends AppCompatActivity {
 /////////////////
     private void setListeners() {
         binding.textSignIn.setOnClickListener(v -> onBackPressed());
-        binding.buttonSignUp.setOnClickListener( v -> {
-            if(isvalidSignUp()) {
-                signUp();
+        binding.buttonSignUp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(isvalidSignUp()) {
+                    signUp();
+                }
             }
         });
         binding.layoutImage.setOnClickListener(v -> {
@@ -72,6 +87,7 @@ public class SignUpActivity extends AppCompatActivity {
             pickImage.launch(intent);
         });
     }
+
 
     private void showToast(String message) {
         Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
@@ -89,17 +105,87 @@ public class SignUpActivity extends AppCompatActivity {
         database.collection(constant.KEY_COLLECTION_USERS).add(user)
                 .addOnSuccessListener(documentReference -> {
                     loading(false);
-                    preferenceManager.putBoolean(constant.KEY_IS_SIGNED_IN,true);
-                    preferenceManager.putString(constant.KEY_USER_ID, documentReference.getId() );
+                    preferenceManager.putBoolean(constant.KEY_IS_SIGNED_IN, true);
+                    preferenceManager.putString(constant.KEY_USER_ID, documentReference.getId());
                     preferenceManager.putString(constant.KEY_NAME, binding.inputName.getText().toString());
                     preferenceManager.putString(constant.KEY_IMAGE, encodeImage);
-                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                    startActivity(intent);
+                    String phoneNumber = inputPhoneNumber.getText().toString().trim();
+                    sendVerificationCode(phoneNumber);
                 })
                 .addOnFailureListener(exception -> {
                     loading(false);
                     showToast(exception.getMessage());
+                });
+    }
+
+    private void sendVerificationCode(String phoneNumber) {
+        PhoneAuthProvider.getInstance().verifyPhoneNumber(
+                phoneNumber,
+                60, // Timeout duration
+                TimeUnit.SECONDS,
+                this,
+                new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
+                    @Override
+                    public void onVerificationCompleted(@NonNull PhoneAuthCredential phoneAuthCredential) {
+                        // Not needed in this case. User input is required.
+                    }
+
+                    @Override
+                    public void onVerificationFailed(@NonNull FirebaseException e) {
+                        Toast.makeText(SignUpActivity.this, "Verification failed: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onCodeSent(@NonNull String s, @NonNull PhoneAuthProvider.ForceResendingToken forceResendingToken) {
+                        verificationId = s;
+
+                        // Show dialog to enter OTP
+                        showOTPDialog();
+                    }
+                }
+        );
+    }
+    private void showOTPDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Enter OTP");
+        View view = getLayoutInflater().inflate(R.layout.activity_dialog_otp, null); // Replace "your_custom_layout_for_otp_dialog" with the XML layout for your OTP dialog.
+        EditText editTextOTP = view.findViewById(R.id.t2); // Replace "editTextOTP" with the ID of the OTP input EditText in your custom layout.
+        builder.setView(view);
+        builder.setPositiveButton("Verify OTP", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                String otp = editTextOTP.getText().toString().trim();
+                if (!otp.isEmpty()) {
+                    // Verify the OTP
+                    verifyOTP(otp);
+                } else {
+                    Toast.makeText(SignUpActivity.this, "Please enter the OTP.", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+        builder.setNegativeButton("Cancel", null);
+        builder.setCancelable(false);
+        AlertDialog otpDialog = builder.create();
+        otpDialog.show();
+    }
+    private void verifyOTP(String otp) {
+        PhoneAuthCredential credential = PhoneAuthProvider.getCredential(verificationId, otp);
+        firebaseAuth.signInWithCredential(credential)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            // OTP verification successful, user is now signed in
+                            preferenceManager.putBoolean(constant.KEY_IS_SIGNED_IN, true); // Set the flag here
+                            Intent intent = new Intent(SignUpActivity.this, MainActivity.class);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                            startActivity(intent);
+                            finish();
+                        } else {
+                            // OTP verification failed
+                            Toast.makeText(SignUpActivity.this, "Verification failed. Please enter a valid OTP.", Toast.LENGTH_SHORT).show();
+                        }
+                    }
                 });
     }
 

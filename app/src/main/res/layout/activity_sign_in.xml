@@ -30,37 +30,52 @@
             android:textColor="@color/secondary_text"
             android:textSize="@dimen/_12ssp"
             android:textStyle="bold"/>
+
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="@dimen/_40sdp"/>
-        <EditText
-            android:id="@+id/inputemail"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_45sdp"
-            android:layout_marginTop="@dimen/_40sdp"
-            android:background="@color/input_background"
-            android:hint="@string/email"
-            android:imeOptions="actionNext"
-            android:importantForAutofill="no"
-            android:paddingStart="@dimen/_16sdp"
-            android:paddingEnd="@dimen/_16sdp"
-            android:inputType="textEmailAddress"
-            android:textColor="@color/primary_text"
-            android:textSize="@dimen/_13ssp"/>
-        <EditText
-            android:id="@+id/inputPassword"
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/emailTextInputLayout"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_45sdp"
             android:layout_marginTop="@dimen/_16sdp"
+            android:hint="Email"
             android:background="@color/input_background"
-            android:hint="@string/password"
-            android:imeOptions="actionDone"
-            android:importantForAutofill="no"
-            android:paddingStart="@dimen/_16sdp"
-            android:paddingEnd="@dimen/_16sdp"
-            android:inputType="textPassword"
+            android:textColorHint="@color/secondary_text"
+            android:textSize="@dimen/_13ssp">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/inputemail"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:inputType="textEmailAddress"
             android:textColor="@color/primary_text"
-            android:textSize="@dimen/_13ssp"/>
+            android:textSize="@dimen/_13ssp" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+    android:id="@+id/passwordTextInputLayout"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/_45sdp"
+    android:layout_marginTop="@dimen/_16sdp"
+    android:hint="@string/password"
+    app:passwordToggleEnabled="true"
+    app:passwordToggleTint="@color/primary_text"
+    android:background="@color/input_background"
+    android:textColorHint="@color/secondary_text"
+    android:textSize="@dimen/_13ssp">
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/inputPassword"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:inputType="textPassword"
+        android:textColor="@color/primary_text"
+        android:textSize="@dimen/_13ssp" />
+
+    </com.google.android.material.textfield.TextInputLayout>
 
         <FrameLayout
             android:layout_width="match_parent"
@@ -103,4 +118,5 @@
 <!--            android:textSize="@dimen/_13ssp"-->
 <!--            android:textStyle="bold"/>-->
     </LinearLayout>
+
 </ScrollView>

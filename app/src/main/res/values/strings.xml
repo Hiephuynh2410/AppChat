@@ -13,4 +13,11 @@
     <string name="online">Online</string>
     <string name="search_hint">search Hint</string>
     <string name="save">save</string>
+    <string-array name="country_codes">
+        <item>+1 (USA)</item>
+        <item>+7 (RUSSIA)</item>
+        <item>+20 (EGYPT)</item>
+        <item>+44 (UK)</item>
+        <item>+84 (VN)</item>
+    </string-array>
 </resources>

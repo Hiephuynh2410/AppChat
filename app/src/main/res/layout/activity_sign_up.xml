@@ -66,25 +66,44 @@
                 android:textSize="@dimen/_13ssp" />
 
         </com.google.android.material.textfield.TextInputLayout>
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/phoneNumberTextInputLayout"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_45sdp"
-            android:layout_marginTop="@dimen/_16sdp"
-            android:hint="Phone Number"
-            android:background="@color/input_background"
-            android:textColorHint="@color/secondary_text"
-            android:textSize="@dimen/_13ssp">
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/inputPhoneNumber"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:inputType="phone"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_16sdp"
+            android:orientation="horizontal">
+            <!-- Spinner for country code -->
+            <Spinner
+            android:id="@+id/spinnerCountryCode"
+            android:layout_width="@dimen/_40sdp"
+            android:layout_height="@dimen/_40sdp"
+            android:background="@drawable/spinner_circle_background"
             android:textColor="@color/primary_text"
             android:textSize="@dimen/_13ssp" />
 
-    </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/phoneNumberTextInputLayout"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="@dimen/_45sdp"
+                android:hint="Phone Number"
+                android:background="@color/input_background"
+                android:textColorHint="@color/secondary_text"
+                android:textSize="@dimen/_13ssp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/inputPhoneNumber"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="phone"
+                    android:textColor="@color/primary_text"
+                    android:textSize="@dimen/_13ssp" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+
+        </LinearLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/emailTextInputLayout4"

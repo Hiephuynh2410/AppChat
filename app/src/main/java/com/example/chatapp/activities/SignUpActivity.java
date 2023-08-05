@@ -1,13 +1,11 @@
 package com.example.chatapp.activities;
 
 import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContract;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -17,21 +15,17 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.util.Base64;
-import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
-import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.chatapp.R;
 import com.example.chatapp.databinding.ActivitySignUpBinding;
 import com.example.chatapp.utilities.PreferenceManager;
 import com.example.chatapp.utilities.constant;
-import com.google.android.gms.auth.api.signin.GoogleSignIn;
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
-import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseException;
@@ -44,6 +38,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
@@ -52,10 +47,10 @@ import java.util.regex.Pattern;
 public class SignUpActivity extends AppCompatActivity {
     private String verificationId;
     private FirebaseAuth firebaseAuth;
-
     private ActivitySignUpBinding binding;
     private PreferenceManager preferenceManager;
     private String encodeImage;
+    private Spinner spinnerCountryCode;
     private EditText inputPhoneNumber;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,10 +61,27 @@ public class SignUpActivity extends AppCompatActivity {
         preferenceManager = new PreferenceManager(getApplicationContext());
         inputPhoneNumber = binding.inputPhoneNumber; // Initialize the inputPhoneNumber EditText
         setListeners();
+        spinnerCountryCode = findViewById(R.id.spinnerCountryCode);
 
+        // Create an ArrayAdapter using the country codes list
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+                R.array.country_codes, android.R.layout.simple_spinner_item);
+
+        // Specify the layout to use when the list of choices appears
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        // Apply the adapter to the spinner
+        spinnerCountryCode.setAdapter(adapter);
     }
 
-
+    private String getSelectedCountryCode() {
+        //lấy những đầu số trong string.xml
+        String[] countryCodes = getResources().getStringArray(R.array.country_codes);
+        int selectedPosition = spinnerCountryCode.getSelectedItemPosition();
+        String selectedCode = countryCodes[selectedPosition];
+        // Extract the country code part (e.g., "+84" from "+84 (VN)")
+        return selectedCode.split(" ")[0];
+    }
 /////////////////
     private void setListeners() {
         binding.textSignIn.setOnClickListener(v -> onBackPressed());
@@ -99,9 +111,18 @@ public class SignUpActivity extends AppCompatActivity {
         HashMap<String, Object> user = new HashMap<>();
         user.put(constant.KEY_NAME, binding.inputName.getText().toString());
         user.put(constant.KEY_EMAIL, binding.inputemail.getText().toString());
-        user.put(constant.KEY_PHONE, inputPhoneNumber.getText().toString());
-        user.put(constant.KEY_PASSWORD, binding.inputPassword.getText().toString());
+
+        // Get the selected country code and concatenate it with the phone number
+        String countryCode = getSelectedCountryCode();
+        String phoneNumber = countryCode + inputPhoneNumber.getText().toString();
+        user.put(constant.KEY_PHONE, phoneNumber);
+
+//        user.put(constant.KEY_PASSWORD, binding.inputPassword.getText().toString());
+        String password = binding.inputPassword.getText().toString().trim();
+        String encodedPassword = encodePassword(password); // Mã hoá mật khẩu
+        user.put(constant.KEY_PASSWORD, encodedPassword);
         user.put(constant.KEY_IMAGE, encodeImage);
+
         database.collection(constant.KEY_COLLECTION_USERS).add(user)
                 .addOnSuccessListener(documentReference -> {
                     loading(false);
@@ -109,13 +130,22 @@ public class SignUpActivity extends AppCompatActivity {
                     preferenceManager.putString(constant.KEY_USER_ID, documentReference.getId());
                     preferenceManager.putString(constant.KEY_NAME, binding.inputName.getText().toString());
                     preferenceManager.putString(constant.KEY_IMAGE, encodeImage);
-                    String phoneNumber = inputPhoneNumber.getText().toString().trim();
                     sendVerificationCode(phoneNumber);
                 })
                 .addOnFailureListener(exception -> {
                     loading(false);
                     showToast(exception.getMessage());
                 });
+    }
+    private String encodePassword(String password) {
+        try {
+            byte[] data = password.getBytes("UTF-8");
+            String encodedPassword = Base64.encodeToString(data, Base64.DEFAULT);
+            return encodedPassword;
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     private void sendVerificationCode(String phoneNumber) {
@@ -145,11 +175,12 @@ public class SignUpActivity extends AppCompatActivity {
                 }
         );
     }
+
     private void showOTPDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Enter OTP");
-        View view = getLayoutInflater().inflate(R.layout.activity_dialog_otp, null); // Replace "your_custom_layout_for_otp_dialog" with the XML layout for your OTP dialog.
-        EditText editTextOTP = view.findViewById(R.id.t2); // Replace "editTextOTP" with the ID of the OTP input EditText in your custom layout.
+        View view = getLayoutInflater().inflate(R.layout.activity_dialog_otp, null);
+        EditText editTextOTP = view.findViewById(R.id.t2);
         builder.setView(view);
         builder.setPositiveButton("Verify OTP", new DialogInterface.OnClickListener() {
             @Override
@@ -168,27 +199,27 @@ public class SignUpActivity extends AppCompatActivity {
         AlertDialog otpDialog = builder.create();
         otpDialog.show();
     }
+
     private void verifyOTP(String otp) {
         PhoneAuthCredential credential = PhoneAuthProvider.getCredential(verificationId, otp);
         firebaseAuth.signInWithCredential(credential)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            // OTP verification successful, user is now signed in
-                            preferenceManager.putBoolean(constant.KEY_IS_SIGNED_IN, true); // Set the flag here
-                            Intent intent = new Intent(SignUpActivity.this, MainActivity.class);
-                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                            startActivity(intent);
-                            finish();
-                        } else {
-                            // OTP verification failed
-                            Toast.makeText(SignUpActivity.this, "Verification failed. Please enter a valid OTP.", Toast.LENGTH_SHORT).show();
-                        }
+            .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                @Override
+                public void onComplete(@NonNull Task<AuthResult> task) {
+                    if (task.isSuccessful()) {
+                        // OTP verification successful, user is now signed in
+                        preferenceManager.putBoolean(constant.KEY_IS_SIGNED_IN, true); // Set the flag here
+                        Intent intent = new Intent(SignUpActivity.this, MainActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        startActivity(intent);
+                        finish();
+                    } else {
+                        // OTP verification failed
+                        Toast.makeText(SignUpActivity.this, "Verification failed. Please enter a valid OTP.", Toast.LENGTH_SHORT).show();
                     }
-                });
+                }
+            });
     }
-
 
     private String encodeImage(Bitmap bitmap) {
         int previewWidth = 150;//Đây là chiều rộng (width) mong muốn cho hình ảnh được mã hóa. Trong trường hợp này, chiều rộng được đặt là 150 pixels.
@@ -200,6 +231,8 @@ public class SignUpActivity extends AppCompatActivity {
         return Base64.encodeToString(bytes, Base64.DEFAULT);//: Đây là bước mã hóa mảng byte thành một chuỗi Base64. Phương thức encodeToString() của lớp Base64 được sử dụng để thực hiện mã hóa, và kết quả chuỗi Base64 được trả về.
     }
 
+    //một biến hằng số đại diện cho một trình khởi chạy kết quả hoạt động.
+    // Nó được sử dụng để mở một hoạt động để chọn hình ảnh và chờ đợi kết quả trả về.
     private final ActivityResultLauncher<Intent> pickImage = registerForActivityResult(
         new ActivityResultContracts.StartActivityForResult(),
         result -> {
@@ -219,6 +252,7 @@ public class SignUpActivity extends AppCompatActivity {
             }
         }
     );
+
     private boolean isValidPassword(String password) {
         // The regex pattern for a valid password (minimum 8 characters, at least one uppercase, one lowercase, and one digit)
         String regexPattern = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d]{8,}$";
@@ -233,6 +267,7 @@ public class SignUpActivity extends AppCompatActivity {
         String password = binding.inputPassword.getText().toString().trim();
         String confirmPassword = binding.inputConfirmPassword.getText().toString().trim();
         String phoneNumber = inputPhoneNumber.getText().toString().trim();
+
         if (TextUtils.isEmpty(phoneNumber)) {
             inputPhoneNumber.setError("Enter phone number");
             return false;

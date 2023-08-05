@@ -9,6 +9,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Base64;
 import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
@@ -39,6 +40,7 @@ import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.io.UnsupportedEncodingException;
 import java.util.regex.Pattern;
 
 public class SignInActivity extends AppCompatActivity {
@@ -143,27 +145,43 @@ public class SignInActivity extends AppCompatActivity {
             binding.buttonSignIn.setVisibility(View.VISIBLE);
         }
     }
+    private String encodePassword(String password) {
+        try {
+            byte[] data = password.getBytes("UTF-8");
+            String encodedPassword = Base64.encodeToString(data, Base64.DEFAULT);
+            return encodedPassword;
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
     private void SignIn() {
         loading(true);
         FirebaseFirestore database = FirebaseFirestore.getInstance();
+        String email = binding.inputemail.getText().toString();
+        String password = binding.inputPassword.getText().toString();
+        String encodedPassword = encodePassword(password); // Encode the password
         database.collection(constant.KEY_COLLECTION_USERS)
-            .whereEqualTo(constant.KEY_EMAIL, binding.inputemail.getText().toString())
-            .whereEqualTo(constant.KEY_PASSWORD, binding.inputPassword.getText().toString())
-            .get().addOnCompleteListener(task -> {
-                if(task.isSuccessful() && task.getResult() != null && task.getResult().getDocuments().size() > 0) {
-                    DocumentSnapshot documentSnapshot = task.getResult().getDocuments().get(0);
-                    preferenceManager.putBoolean(constant.KEY_IS_SIGNED_IN, true);
-                    preferenceManager.putString(constant.KEY_USER_ID, documentSnapshot.getId());
-                    preferenceManager.putString(constant.KEY_NAME, documentSnapshot.getString(constant.KEY_NAME));
-                    preferenceManager.putString(constant.KEY_IMAGE, documentSnapshot.getString(constant.KEY_IMAGE));
-                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                    startActivity(intent);
-                }  else {
-                    loading(false);
-                    showToast("Unable to Sign In");
-                }
-            });
+                .whereEqualTo(constant.KEY_EMAIL, email)
+                .whereEqualTo(constant.KEY_PASSWORD, encodedPassword) // Compare encoded passwords
+                .get().addOnCompleteListener(task -> {
+                    if (task.isSuccessful() && task.getResult() != null && task.getResult().getDocuments().size() > 0) {
+                        // Sign in successful
+                        DocumentSnapshot documentSnapshot = task.getResult().getDocuments().get(0);
+                        preferenceManager.putBoolean(constant.KEY_IS_SIGNED_IN, true);
+                        preferenceManager.putString(constant.KEY_USER_ID, documentSnapshot.getId());
+                        preferenceManager.putString(constant.KEY_NAME, documentSnapshot.getString(constant.KEY_NAME));
+                        preferenceManager.putString(constant.KEY_IMAGE, documentSnapshot.getString(constant.KEY_IMAGE));
+                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        startActivity(intent);
+                    } else {
+                        // Sign in failed
+                        loading(false);
+                        showToast("Invalid credentials. Please try again.");
+                    }
+                });
     }
 
     private void showToast(String mess) {

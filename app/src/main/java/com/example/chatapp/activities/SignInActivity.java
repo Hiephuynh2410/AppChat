@@ -1,21 +1,15 @@
 package com.example.chatapp.activities;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Dialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Base64;
-import android.util.Log;
-import android.util.Patterns;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,25 +17,10 @@ import com.example.chatapp.R;
 import com.example.chatapp.databinding.ActivitySignInBinding;
 import com.example.chatapp.utilities.PreferenceManager;
 import com.example.chatapp.utilities.constant;
-import com.google.android.gms.auth.api.Auth;
-import com.google.android.gms.auth.api.signin.GoogleSignIn;
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
-import com.google.android.gms.auth.api.signin.GoogleSignInClient;
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
-import com.google.android.gms.auth.api.signin.GoogleSignInResult;
-import com.google.android.gms.common.api.ApiException;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthCredential;
-import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.io.UnsupportedEncodingException;
-import java.util.regex.Pattern;
 
 public class SignInActivity extends AppCompatActivity {
 
@@ -50,12 +29,14 @@ public class SignInActivity extends AppCompatActivity {
     Dialog dialog;
     TextView btnotp;
     private AlertDialog phoneNumberDialog;
+    private TextView forgot_Password;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         dialog = new Dialog(SignInActivity.this);
         preferenceManager = new PreferenceManager(getApplicationContext());
+
 
 //// Reset the KEY_IS_SIGNED_IN flag to false every time the activity is created
      //   preferenceManager.putBoolean(constant.KEY_IS_SIGNED_IN, false);
@@ -77,6 +58,15 @@ public class SignInActivity extends AppCompatActivity {
 //                startActivity(intent);
 //            }
 //        });
+        forgot_Password = findViewById(R.id.forgotPass);
+        forgot_Password.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), forgot_password.class);
+                startActivity(intent);
+                finish();
+            }
+        });
     }
 
     //////////////////////////////////

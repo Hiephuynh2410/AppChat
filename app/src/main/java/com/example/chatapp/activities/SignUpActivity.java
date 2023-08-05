@@ -137,6 +137,7 @@ public class SignUpActivity extends AppCompatActivity {
                     showToast(exception.getMessage());
                 });
     }
+
     private String encodePassword(String password) {
         try {
             byte[] data = password.getBytes("UTF-8");

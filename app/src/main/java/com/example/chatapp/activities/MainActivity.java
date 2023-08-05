@@ -7,6 +7,7 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Base64;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 
@@ -57,6 +58,8 @@ public class MainActivity extends BaseActivity  implements ConversionListener {
         setListener();
         listenConversation();
         imgview = findViewById(R.id.imageProfile);
+
+
         imgview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

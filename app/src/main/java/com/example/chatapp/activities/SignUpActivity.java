@@ -45,6 +45,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class SignUpActivity extends AppCompatActivity {
+
     private String verificationId;
     private FirebaseAuth firebaseAuth;
     private ActivitySignUpBinding binding;
@@ -52,6 +53,7 @@ public class SignUpActivity extends AppCompatActivity {
     private String encodeImage;
     private Spinner spinnerCountryCode;
     private EditText inputPhoneNumber;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,8 +66,10 @@ public class SignUpActivity extends AppCompatActivity {
         spinnerCountryCode = findViewById(R.id.spinnerCountryCode);
 
         // Create an ArrayAdapter using the country codes list
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
-                R.array.country_codes, android.R.layout.simple_spinner_item);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
+                this,
+                R.array.country_codes,
+                android.R.layout.simple_spinner_item);
 
         // Specify the layout to use when the list of choices appears
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -79,10 +83,11 @@ public class SignUpActivity extends AppCompatActivity {
         String[] countryCodes = getResources().getStringArray(R.array.country_codes);
         int selectedPosition = spinnerCountryCode.getSelectedItemPosition();
         String selectedCode = countryCodes[selectedPosition];
-        // Extract the country code part (e.g., "+84" from "+84 (VN)")
         return selectedCode.split(" ")[0];
     }
+
 /////////////////
+
     private void setListeners() {
         binding.textSignIn.setOnClickListener(v -> onBackPressed());
         binding.buttonSignUp.setOnClickListener(new View.OnClickListener() {
@@ -99,7 +104,6 @@ public class SignUpActivity extends AppCompatActivity {
             pickImage.launch(intent);
         });
     }
-
 
     private void showToast(String message) {
         Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
@@ -124,18 +128,18 @@ public class SignUpActivity extends AppCompatActivity {
         user.put(constant.KEY_IMAGE, encodeImage);
 
         database.collection(constant.KEY_COLLECTION_USERS).add(user)
-                .addOnSuccessListener(documentReference -> {
-                    loading(false);
-                    preferenceManager.putBoolean(constant.KEY_IS_SIGNED_IN, true);
-                    preferenceManager.putString(constant.KEY_USER_ID, documentReference.getId());
-                    preferenceManager.putString(constant.KEY_NAME, binding.inputName.getText().toString());
-                    preferenceManager.putString(constant.KEY_IMAGE, encodeImage);
-                    sendVerificationCode(phoneNumber);
-                })
-                .addOnFailureListener(exception -> {
-                    loading(false);
-                    showToast(exception.getMessage());
-                });
+            .addOnSuccessListener(documentReference -> {
+                loading(false);
+                preferenceManager.putBoolean(constant.KEY_IS_SIGNED_IN, true);
+                preferenceManager.putString(constant.KEY_USER_ID, documentReference.getId());
+                preferenceManager.putString(constant.KEY_NAME, binding.inputName.getText().toString());
+                preferenceManager.putString(constant.KEY_IMAGE, encodeImage);
+                sendVerificationCode(phoneNumber);
+            })
+            .addOnFailureListener(exception -> {
+                loading(false);
+                showToast(exception.getMessage());
+            });
     }
 
     private String encodePassword(String password) {
@@ -151,29 +155,29 @@ public class SignUpActivity extends AppCompatActivity {
 
     private void sendVerificationCode(String phoneNumber) {
         PhoneAuthProvider.getInstance().verifyPhoneNumber(
-                phoneNumber,
-                60, // Timeout duration
-                TimeUnit.SECONDS,
-                this,
-                new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
-                    @Override
-                    public void onVerificationCompleted(@NonNull PhoneAuthCredential phoneAuthCredential) {
-                        // Not needed in this case. User input is required.
-                    }
-
-                    @Override
-                    public void onVerificationFailed(@NonNull FirebaseException e) {
-                        Toast.makeText(SignUpActivity.this, "Verification failed: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                    }
-
-                    @Override
-                    public void onCodeSent(@NonNull String s, @NonNull PhoneAuthProvider.ForceResendingToken forceResendingToken) {
-                        verificationId = s;
-
-                        // Show dialog to enter OTP
-                        showOTPDialog();
-                    }
+            phoneNumber,
+            60, // Timeout duration
+            TimeUnit.SECONDS,
+            this,
+            new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
+                @Override
+                public void onVerificationCompleted(@NonNull PhoneAuthCredential phoneAuthCredential) {
+                    // Not needed in this case. User input is required.
                 }
+
+                @Override
+                public void onVerificationFailed(@NonNull FirebaseException e) {
+                    Toast.makeText(SignUpActivity.this, "Verification failed: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+
+                @Override
+                public void onCodeSent(@NonNull String s, @NonNull PhoneAuthProvider.ForceResendingToken forceResendingToken) {
+                    verificationId = s;
+
+                    // Show dialog to enter OTP
+                    showOTPDialog();
+                }
+            }
         );
     }
 
@@ -232,7 +236,7 @@ public class SignUpActivity extends AppCompatActivity {
         return Base64.encodeToString(bytes, Base64.DEFAULT);//: Đây là bước mã hóa mảng byte thành một chuỗi Base64. Phương thức encodeToString() của lớp Base64 được sử dụng để thực hiện mã hóa, và kết quả chuỗi Base64 được trả về.
     }
 
-    //một biến hằng số đại diện cho một trình khởi chạy kết quả hoạt động.
+    //một biến hằng số đại diện cho một trình khởi chạy kết zquả hoạt động.
     // Nó được sử dụng để mở một hoạt động để chọn hình ảnh và chờ đợi kết quả trả về.
     private final ActivityResultLauncher<Intent> pickImage = registerForActivityResult(
         new ActivityResultContracts.StartActivityForResult(),
@@ -273,7 +277,8 @@ public class SignUpActivity extends AppCompatActivity {
             inputPhoneNumber.setError("Enter phone number");
             return false;
         }
-        if (name.contains(" ")) {
+
+         if (name.contains(" ")) {
             binding.inputName.setError("Name cannot contain spaces");
             return false;
         }
@@ -282,10 +287,12 @@ public class SignUpActivity extends AppCompatActivity {
             showToast("Select profile image");
             return false;
         }
+
         if (!isValidPassword(password)) {
             binding.inputPassword.setError("Password must be at least 8 characters long, contain one uppercase letter, one lowercase letter, and one digit.");
             return false;
         }
+
         if (TextUtils.isEmpty(name) && TextUtils.isEmpty(email) && TextUtils.isEmpty(password) && TextUtils.isEmpty(confirmPassword)) {
             binding.inputName.setError("Enter name");
             binding.inputemail.setError("Enter email");
@@ -293,10 +300,12 @@ public class SignUpActivity extends AppCompatActivity {
             binding.inputConfirmPassword.setError("Confirm your password");
             return false;
         }
+
         if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             binding.inputemail.setError("Enter valid email");
             return false;
         }
+
         if (!password.equals(confirmPassword)) {
             binding.inputConfirmPassword.setError("Password & confirm password must be the same");
             return false;
@@ -310,17 +319,19 @@ public class SignUpActivity extends AppCompatActivity {
 
         // kiểm tra gmail đã tồn tại
         FirebaseFirestore db = FirebaseFirestore.getInstance();
+
         db.collection(constant.KEY_COLLECTION_USERS)
-                .whereEqualTo(constant.KEY_EMAIL, email)
-                .get()
-                .addOnSuccessListener(queryDocumentSnapshots -> {
-                    if (!queryDocumentSnapshots.isEmpty()) {
-                        binding.inputemail.setError("Email is already registered");
-                    } else {
-                        signUp();
-                    }
-                })
-                .addOnFailureListener(e -> showToast("Error checking email existence"));
+
+            .whereEqualTo(constant.KEY_EMAIL, email)
+            .get()
+            .addOnSuccessListener(queryDocumentSnapshots -> {
+                if (!queryDocumentSnapshots.isEmpty()) {
+                    binding.inputemail.setError("Email is already registered");
+                } else {
+                    signUp();
+                }
+            })
+            .addOnFailureListener(e -> showToast("Error checking email existence"));
 
         return false;
     }

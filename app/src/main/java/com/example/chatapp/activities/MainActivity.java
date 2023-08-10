@@ -7,7 +7,6 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Base64;
 import android.view.View;
-import android.widget.TextView;
 import android.widget.Toast;
 
 
@@ -34,8 +33,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
-
-
 public class MainActivity extends BaseActivity  implements ConversionListener {
 
     private ActivityMainBinding binding;
@@ -196,12 +193,14 @@ public class MainActivity extends BaseActivity  implements ConversionListener {
                         startActivity(new Intent(getApplicationContext(), SignInActivity.class));
                         finish();
                     })
-                    .addOnFailureListener(e -> showToast("Unable to sign out. Please try again."));
+                    .addOnFailureListener(e -> showToast("Unable to sign out. Please try again"));
         } else {
             showToast("User ID is null or empty. Unable to sign out.");
         }
     }
 
+    //chuyển hướng người dùng từ màn hình hiện tại đến màn hình ChatActivity khi họ nhấn vào một phần giao diện liên quan đến việc chuyển đổi
+    // Thông tin của người dùng cũng được truyền theo để có thể sử dụng trong màn hình mới.
     @Override
     public void onConversionClicked(User user) {
         Intent intent = new Intent(getApplicationContext(), chatActivity.class);

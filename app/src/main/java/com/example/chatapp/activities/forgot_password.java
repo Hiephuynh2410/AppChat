@@ -69,27 +69,21 @@ public class forgot_password extends AppCompatActivity {
                         .addOnCompleteListener(task -> {
                             if (task.isSuccessful()) {
                                 if (!task.getResult().isEmpty()) {
-                                    // Assuming the password is stored in a field called "password"
                                     DocumentSnapshot document = task.getResult().getDocuments().get(0);
                                     String encryptedPassword = document.getString("password");
 
                                     // Giải mã mật khẩu đã mã hoá
                                     String decryptedPassword = decodePassword(encryptedPassword);
 
-                                    // Show a dialog with the decrypted password
                                     AlertDialog alertDialog = new AlertDialog.Builder(forgot_password.this).create();
                                     alertDialog.setTitle("Password Recovery");
                                     alertDialog.setMessage("Your password: " + decryptedPassword);
                                     alertDialog.setButton(DialogInterface.BUTTON_POSITIVE, "OK", (dialog, which) -> alertDialog.dismiss());
                                     alertDialog.show();
                                 } else {
-                                    // Handle the case where the email is not found in Firestore
-                                    // For example, show a toast message or an error dialog
                                     Toast.makeText(forgot_password.this, "Email not found", Toast.LENGTH_SHORT).show();
                                 }
                             } else {
-                                // Handle the case where the Firestore query failed
-                                // You can log an error or show an error message
                                 Toast.makeText(forgot_password.this, "Failed to retrieve password", Toast.LENGTH_SHORT).show();
                             }
                         });

@@ -112,7 +112,7 @@ public class UserActivity extends BaseActivity implements UserListener {
                 user.token = queryDocumentSnapshot.getString(constant.KEY_FCM_TOKEN);
                 user.id = queryDocumentSnapshot.getId();
 
-                // Check if the user's name contains the search query
+                // search, Check if the user's name contains the search query
                 String searchQuery = binding.searchView.getQuery().toString().toLowerCase();
                 if (user.name.toLowerCase().contains(searchQuery) && !user.id.equals(currentUserId)) {
                     filteredUsers.add(user);

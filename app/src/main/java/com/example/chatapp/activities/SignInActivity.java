@@ -121,9 +121,9 @@ public class SignInActivity extends AppCompatActivity {
 //                String phoneNumber = editTextPhoneNumber.getText().toString().trim();
 //                if (!TextUtils.isEmpty(phoneNumber)) {
 //                    // Start OTP activity and pass the phone number
-                    Intent intent = new Intent(SignInActivity.this, OTP.class);
+//                    Intent intent = new Intent(SignInActivity.this, OTP.class);
 //                    intent.putExtra("phoneNumber", phoneNumber);
-                    startActivity(intent);
+//                    startActivity(intent);
 //                } else {
 //                    showToast("Please enter a valid phone number.");
 //                }

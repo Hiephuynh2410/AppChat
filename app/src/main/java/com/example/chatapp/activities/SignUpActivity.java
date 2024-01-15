@@ -110,7 +110,9 @@ public class SignUpActivity extends AppCompatActivity {
                     preferenceManager.putString(constant.KEY_NAME, binding.inputName.getText().toString());
                     preferenceManager.putString(constant.KEY_IMAGE, encodeImage);
                     String phoneNumber = inputPhoneNumber.getText().toString().trim();
-                    sendVerificationCode(phoneNumber);
+                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    startActivity(intent);
                 })
                 .addOnFailureListener(exception -> {
                     loading(false);
@@ -118,33 +120,33 @@ public class SignUpActivity extends AppCompatActivity {
                 });
     }
 
-    private void sendVerificationCode(String phoneNumber) {
-        PhoneAuthProvider.getInstance().verifyPhoneNumber(
-                phoneNumber,
-                60, // Timeout duration
-                TimeUnit.SECONDS,
-                this,
-                new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
-                    @Override
-                    public void onVerificationCompleted(@NonNull PhoneAuthCredential phoneAuthCredential) {
-                        // Not needed in this case. User input is required.
-                    }
-
-                    @Override
-                    public void onVerificationFailed(@NonNull FirebaseException e) {
-                        Toast.makeText(SignUpActivity.this, "Verification failed: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                    }
-
-                    @Override
-                    public void onCodeSent(@NonNull String s, @NonNull PhoneAuthProvider.ForceResendingToken forceResendingToken) {
-                        verificationId = s;
-
-                        // Show dialog to enter OTP
-                        showOTPDialog();
-                    }
-                }
-        );
-    }
+//    private void sendVerificationCode(String phoneNumber) {
+//        PhoneAuthProvider.getInstance().verifyPhoneNumber(
+//                phoneNumber,
+//                60, // Timeout duration
+//                TimeUnit.SECONDS,
+//                this,
+//                new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
+//                    @Override
+//                    public void onVerificationCompleted(@NonNull PhoneAuthCredential phoneAuthCredential) {
+//                        // Not needed in this case. User input is required.
+//                    }
+//
+//                    @Override
+//                    public void onVerificationFailed(@NonNull FirebaseException e) {
+//                        Toast.makeText(SignUpActivity.this, "Verification failed: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+//                    }
+//
+//                    @Override
+//                    public void onCodeSent(@NonNull String s, @NonNull PhoneAuthProvider.ForceResendingToken forceResendingToken) {
+//                        verificationId = s;
+//
+//                        // Show dialog to enter OTP
+//                        showOTPDialog();
+//                    }
+//                }
+//        );
+//    }
     private void showOTPDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Enter OTP");
